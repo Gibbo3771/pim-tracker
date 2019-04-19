@@ -1,9 +1,9 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 label::after {
-  content: ':';
+  content: ":";
 }
 
 ul#bucket-list {
@@ -27,4 +27,10 @@ button.delete {
   background: url(/imgs/delete.png) no-repeat;
   background-size: 12px;
   margin-right: 5px;
+}
+
+#map {
+  height: 50vh;
+  width: auto;
+  margin: 5rem;
 }
