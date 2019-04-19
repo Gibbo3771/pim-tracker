@@ -16,7 +16,7 @@ CrimeItemView.prototype.render = function() {
 
   const date = this.createDate();
   itemContainer.appendChild(date);
-  document.body.appendChild(itemContainer);
+  document.querySelector("#information").appendChild(itemContainer);
 };
 
 CrimeItemView.prototype.createCategory = function() {
