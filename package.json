@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Gibbo3771/pim-tracker#readme",
   "dependencies": {
+    "leaflet": "^1.4.0",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.0"
   },
