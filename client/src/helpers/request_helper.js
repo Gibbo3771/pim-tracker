@@ -21,6 +21,7 @@ RequestHelper.prototype.getCrimeAtLocation = function(date, lat, long) {
 };
 
 RequestHelper.prototype.getCrimeInPolyArea = function(
+  date,
   lat1,
   lng1,
   lat2,
@@ -29,6 +30,7 @@ RequestHelper.prototype.getCrimeInPolyArea = function(
   lng3
 ) {
   const params = {
+    date: date,
     poly: `${lat1},${lng1}:${lat2},${lng2}:${lat2},${lng3}`
   };
   return this.request(params);
