@@ -23,4 +23,9 @@ MapView.prototype.createTileLayer = function() {
     }
   ).addTo(this.map);
 };
+
+MapView.prototype.createMarker = function(lat, lng) {
+  const marker = L.marker([51.5, -0.09]).addTo(mymap);
+};
+
 module.exports = MapView;
