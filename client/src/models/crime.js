@@ -5,9 +5,4 @@ const Crime = function(url) {
   this.url = url;
 };
 
-Crime.prototype.get = function() {
-  const request = new RequestHelper(url);
-  return request;
-};
-
 module.exports = Crime;

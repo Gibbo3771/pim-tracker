@@ -1,41 +1,35 @@
+const queryString = require("querystring");
+
 const RequestHelper = function(url) {
   this.url = url;
 };
 
-RequestHelper.prototype.get = function(urlParam) {
-  const url = urlParam ? `${this.url}/${urlParam}` : this.url;
+RequestHelper.prototype.get = function() {
   return fetch(url)
-    .then((response) => response.json())
-    .catch((err) => console.error(err));
+    .then(response => response.json())
+    .catch(err => console.error(err));
 };
 
-RequestHelper.prototype.post = function(payload, urlParam) {
-  const url = urlParam ? `${this.url}/${urlParam}` : this.url;
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(payload),
-    headers: { 'Content-Type': 'application/json' }
-  })
-    .then((response) => response.json())
-    .catch((err) => console.error(err));
+RequestHelper.prototype.getCrimesAtLocation = function(
+  date,
+  lat,
+  long,
+  radius
+) {
+  const params = {
+    date: date,
+    lat: lat,
+    long: long,
+    radius: radius
+  };
+
+  return fetch(this.createUrl(params))
+    .then(response => response.json())
+    .catch(err => console.error(err));
 };
 
-RequestHelper.prototype.put = function(payload, urlParam) {
-  const url = urlParam ? `${this.url}/${urlParam}` : this.url;
-  return fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(payload),
-    headers: { 'Content-Type': 'application/json' }
-  })
-    .then((response) => response.json())
-    .catch((err) => console.error(err));
-};
-
-RequestHelper.prototype.delete = function(urlParam) {
-  const url = urlParam ? `${this.url}/${urlParam}` : this.url;
-  return fetch(url, { method: 'DELETE' })
-    .then((response) => response.json())
-    .catch((err) => console.error(err));
+RequestHelper.prototype.createUrl = function(params) {
+  return `${this.url}?${queryString.stringify(params)}`;
 };
 
 module.exports = RequestHelper;
