@@ -24,8 +24,22 @@ MapView.prototype.createTileLayer = function() {
   ).addTo(this.map);
 };
 
-MapView.prototype.createMarker = function(lat, lng) {
-  const marker = L.marker([51.5, -0.09]).addTo(mymap);
+MapView.prototype.bindEvents = function() {
+  this.clickEvent();
+};
+
+MapView.prototype.clickEvent = function() {
+  const popup = L.popup();
+
+  function onMapClick(event) {
+    console.log(event.latlng);
+    popup
+      .setLatLng(event.latlng)
+      .setContent("You clicked the map at " + event.latlng.toString());
+    // .openTo(this.map);
+  }
+
+  this.map.on("click", onMapClick);
 };
 
 module.exports = MapView;

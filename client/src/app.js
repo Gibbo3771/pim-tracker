@@ -8,4 +8,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // require("./__test__/event_click_testing.js");
   const map = new MapView();
   map.render();
+  map.bindEvents();
 });
