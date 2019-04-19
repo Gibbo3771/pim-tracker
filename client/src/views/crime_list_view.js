@@ -1,16 +1,15 @@
 const PubSub = require("../helpers/pub_sub.js");
 const CrimeItemView = require("./crime_item_view.js");
 
-const CrimeListView = function(crimeListElement) {
-  this.element = crimeListElement;
+const CrimeListView = function(crimes) {
+  this.crimes = crimes;
 };
 
-CrimeListView.prototype.render = function(items) {
-  this.element.innerHTML = "";
-  const div = document.createElement("div");
-  const crimeListView = new CrimeItemView(this.container);
-  items.forEach(item => {
-    crimeListView.render(item);
+CrimeListView.prototype.render = function() {
+  const crimeListView = document.createElement("div");
+  this.crimes.forEach(crime => {
+    const crimeItemView = new CrimeItemView(crime);
+    crimeItemView.render();
   });
 };
 
