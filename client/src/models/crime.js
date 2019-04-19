@@ -1,8 +1,11 @@
 const PubSub = require("../helpers/pub_sub.js");
-const RequestHelper = require("../helpers/request_helper.js");
 
-const Crime = function(url) {
-  this.url = url;
+const Crime = function(params) {
+  this.category = params.category;
+  this.streetName = params.location.street.name;
+  this.month = params.month;
+  this.lat = params.location.latitude;
+  this.lng = params.location.longitude;
 };
 
 module.exports = Crime;
