@@ -1,0 +1,23 @@
+{
+  "name": "pim-tracker",
+  "version": "1.0.0",
+  "description": "You have been approached by the Metropolitan Police Service. Your task is to build a crime tracker app that allows the user to view crime in the area of London.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gibbo3771/pim-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gibbo3771/pim-tracker/issues"
+  },
+  "homepage": "https://github.com/Gibbo3771/pim-tracker#readme",
+  "dependencies": {
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0"
+  }
+}
