@@ -1,4 +1,5 @@
 require("leaflet");
+const PubSub = require("../helpers/pub_sub.js");
 
 const MapView = function() {
   this.map = null;
@@ -26,20 +27,29 @@ MapView.prototype.createTileLayer = function() {
 
 MapView.prototype.bindEvents = function() {
   this.clickEvent();
+  this.createMarker("51.50", "-0.099");
 };
 
 MapView.prototype.clickEvent = function() {
-  const popup = L.popup();
-
   function onMapClick(event) {
+    const popup = L.popup();
+
     console.log(event.latlng);
     popup
       .setLatLng(event.latlng)
       .setContent("You clicked the map at " + event.latlng.toString());
-    // .openTo(this.map);
+    // .openOn(this.map) <-- doesn't seem to like this
   }
 
   this.map.on("click", onMapClick);
+};
+
+MapView.prototype.createMarker = function(lat, lng) {
+  const marker = L.marker([lat, lng]);
+  marker
+    .bindPopup(`You've clicked here at ${lat} ${lng}`)
+    .openPopup()
+    .addTo(this.map);
 };
 
 module.exports = MapView;
