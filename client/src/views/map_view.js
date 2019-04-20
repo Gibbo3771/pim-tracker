@@ -25,31 +25,31 @@ MapView.prototype.createTileLayer = function() {
   ).addTo(this.map);
 };
 
-MapView.prototype.bindEvents = function() {
-  this.clickEvent();
-  this.createMarker("51.50", "-0.099");
-};
-
-MapView.prototype.clickEvent = function() {
-  function onMapClick(event) {
-    const popup = L.popup();
-
-    console.log(event.latlng);
-    popup
-      .setLatLng(event.latlng)
-      .setContent("You clicked the map at " + event.latlng.toString());
-    // .openOn(this.map) <-- doesn't seem to like this
-  }
-
-  this.map.on("click", onMapClick);
-};
-
 MapView.prototype.createMarker = function(lat, lng) {
   const marker = L.marker([lat, lng]);
   marker
     .bindPopup(`You've clicked here at ${lat} ${lng}`)
     .openPopup()
     .addTo(this.map);
+};
+
+MapView.prototype.clickEvent = function() {
+  const popup = L.popup();
+  function onMapClick(event) {
+    console.log(event.latlng);
+    console.log(popup);
+    popup
+      .setLatLng(event.latlng)
+      .setContent("You clicked the map at " + event.latlng.toString()) //<-- doesn't work as expected
+      .openOn(this.map); //<-- console errors with this
+  }
+
+  this.map.on("click", onMapClick);
+};
+
+MapView.prototype.bindEvents = function() {
+  this.clickEvent();
+  this.createMarker("51.50", "-0.099");
 };
 
 module.exports = MapView;
