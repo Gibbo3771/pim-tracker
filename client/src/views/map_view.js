@@ -50,6 +50,19 @@ MapView.prototype.clickEvent = function() {
 MapView.prototype.bindEvents = function() {
   this.clickEvent();
   this.createMarker("51.50", "-0.099");
+  this.getBounds(51.5, -0.099);
+  this.makeRectangle("51.503", "-0.101", "51.502", "-0.098");
 };
 
+MapView.prototype.makeRectangle = function(lat1, lng1, lat2, lng2) {
+  const bounds = [[lat1, lng1], [lat2, lng2]];
+  L.rectangle(bounds, { color: "#ff7800", weight: 0.5 }).addTo(this.map);
+  // zoom the map to the rectangle bounds
+  // this.map.fitBounds(bounds);
+};
+
+MapView.prototype.getBounds = function(lat, lng) {
+  const point = L.latLng(lat, lng);
+  console.log(point.toBounds(5));
+};
 module.exports = MapView;
