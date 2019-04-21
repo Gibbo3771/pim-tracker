@@ -29,7 +29,7 @@ MapView.prototype.createMarker = function(lat, lng) {
   const marker = L.marker([lat, lng]);
   marker
     .bindPopup(`You've clicked here at ${lat} ${lng}`)
-    .openPopup()
+    .openPopup() //doesn't open with the marker. must be clicked to get pop up
     .addTo(this.map);
 };
 
@@ -38,10 +38,9 @@ MapView.prototype.clickEvent = function() {
   function onMapClick(event) {
     console.log(event.latlng);
     console.log(popup);
-    popup
-      .setLatLng(event.latlng)
-      .setContent("You clicked the map at " + event.latlng.toString()) //<-- doesn't work as expected
-      .openOn(this.map); //<-- console errors with this
+    return popup.setLatLng(event.latlng);
+    // .setContent("You clicked the map at " + event.latlng.toString()); //<-- doesn't work as expected from the quick start guide
+    // .openOn(this.map); //<-- console errors with this
   }
 
   this.map.on("click", onMapClick);
@@ -57,12 +56,13 @@ MapView.prototype.bindEvents = function() {
 MapView.prototype.makeRectangle = function(lat1, lng1, lat2, lng2) {
   const bounds = [[lat1, lng1], [lat2, lng2]];
   L.rectangle(bounds, { color: "#ff7800", weight: 0.5 }).addTo(this.map);
-  // zoom the map to the rectangle bounds
+  // below code zooms the map to the rectangle bounds, may need at some point
   // this.map.fitBounds(bounds);
 };
 
 MapView.prototype.getBounds = function(lat, lng) {
   const point = L.latLng(lat, lng);
-  console.log(point.toBounds(5));
+  console.log(`This is ${lat} and ${lng} to 5 (metres)`, point.toBounds(5));
 };
+
 module.exports = MapView;
