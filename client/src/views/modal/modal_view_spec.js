@@ -46,7 +46,7 @@ describe("Modal View", function() {
         expect(this.backdrop.style.height).to.eql("100vh");
       });
       it("should have an opacity of 0.9", function() {
-        expect(this.backdrop.style.opacity).to.eql("0.9");
+        expect(this.backdrop.style.background).to.eql("rgba(0, 0, 0, 0.9)");
       });
       it("should be fixed and at the top left corner", function() {
         expect(this.backdrop.style.position).to.eql("fixed");
