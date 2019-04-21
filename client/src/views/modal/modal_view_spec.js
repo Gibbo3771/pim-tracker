@@ -8,10 +8,49 @@ describe("Modal", function() {
   });
 
   before(function() {
-    this.modal = new Modal("150px", "150px", "0.9");
+    this.modal = new Modal(
+      "150px",
+      "150px",
+      "0.9",
+      document.createElement("div")
+    );
   });
 
-  it("adds a fullscreen backdrop", function() {
-    const backdrop = document.getElementById("modal-backdrop");
+  describe("valid content", function() {
+    it("has a div as it's content node", function() {
+      expect(this.modal.content.nodeName).eql("DIV");
+    });
+  });
+
+  describe("render", function() {
+    it("renders without crashing", function() {
+      this.modal.render();
+    });
+  });
+
+  describe("backdrop", function() {
+    before(function() {
+      this.backdrop = document.getElementById("modal-backdrop");
+    });
+
+    it("adds a fullscreen backdrop", function() {
+      expect(this.backdrop).to.not.be.undefined;
+    });
+
+    describe("backdrop dimensions", function() {
+      it("should have a width of 100vw", function() {
+        expect(this.backdrop.style.width).to.eql("100vw");
+      });
+      it("should have a height of 100vh", function() {
+        expect(this.backdrop.style.height).to.eql("100vh");
+      });
+      it("should have an opacity of 0.9", function() {
+        expect(this.backdrop.style.opacity).to.eql("0.9");
+      });
+    });
+
+    describe("backdrop click", function() {
+      xit("should close the modal when the backdrop is clicked", function() {});
+    });
   });
 });
