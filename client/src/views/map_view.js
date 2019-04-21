@@ -9,10 +9,22 @@ const MapView = function() {
   this.lng = 0;
   this.currentMarker = null;
   this.currentBoundingBox = null;
+
+  this.defaultLatlng = { lat: 51.505, lng: -0.09 };
+  this.leftMarker = null;
+  this.rightMarker = null;
+
+  this.firstLat = 0;
+  this.secondLat = 0;
+  this.firstLng = 0;
+  this.secondLng = 0;
+  this.map = L.map("map").setView(
+    [this.defaultLatlng.lat, this.defaultLatlng.lng],
+    13
+  );
 };
 
 MapView.prototype.render = function() {
-  this.map = L.map("map").setView([51.505, -0.09], 13);
   this.createTileLayer();
 };
 
@@ -24,35 +36,62 @@ MapView.prototype.createTileLayer = function() {
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
       id: "mapbox.streets",
-      accessToken: this.accessToken
+      accessToken: this.accessToken,
+      dragging: false
     }
   ).addTo(this.map);
 };
 
 MapView.prototype.createMarker = function(lat, lng) {
-  if (this.currentMarker) this.currentMarker.remove();
-  this.currentMarker = L.marker([lat, lng]);
-  this.currentMarker.addTo(this.map);
+  this.leftMarker = L.marker([lat - 0.01, lng - 0.01], { draggable: true });
+  this.rightMarker = L.marker([lat + 0.01, lng + 0.01], { draggable: true });
+  this.leftMarker.addTo(this.map);
+  this.rightMarker.addTo(this.map);
 };
 
 MapView.prototype.handleClickEvent = function(event) {
-  const popup = L.popup();
   this.lat = event.latlng.lat;
   this.lng = event.latlng.lng;
   this.createMarker(this.lat, this.lng);
+  this.createBoundingBox(this.lat, this.lng, this.lat, this.lng);
+};
+
+MapView.prototype.handleLeftMarkerDrag = function(evt) {
+  this.firstLat = evt.latlng.lat;
+  this.firstLng = evt.latlng.lng;
+  console.log(this.evt);
   this.createBoundingBox(
-    this.lat - 0.01,
-    this.lng - 0.02,
-    this.lat + 0.01,
-    this.lng + 0.02
+    this.firstLat,
+    this.firstLng,
+    this.secondLat,
+    this.secondLng
   );
-  console.log();
+};
+
+MapView.prototype.handleRightMarkerDrag = function(evt) {
+  this.secondLat = evt.latlng.lat;
+  this.secondLng = evt.latlng.lng;
+  this.createBoundingBox(
+    this.firstLat,
+    this.firstLng,
+    this.secondLat,
+    this.secondLng
+  );
+};
+
+MapView.prototype.handleDragEnd = function() {
+  this.map.fitBounds([
+    [this.firstLat, this.firstLng],
+    [this.secondLat, this.secondLng]
+  ]);
 };
 
 MapView.prototype.bindEvents = function() {
   this.map.on("click", evt => this.handleClickEvent(evt));
-  // this.getBounds(51.5, -0.099);
-  // this.createBoundingBox("51.503", "-0.101", "51.502", "-0.098");
+  this.createMarker(51.505, -0.09);
+  this.rightMarker.on("drag", evt => this.handleLeftMarkerDrag(evt));
+  this.leftMarker.on("drag", evt => this.handleRightMarkerDrag(evt));
+  // this.leftMarker.on("dragend ", evt => this.handleDragEnd(evt));
 };
 
 MapView.prototype.createBoundingBox = function(lat1, lng1, lat2, lng2) {
@@ -62,13 +101,6 @@ MapView.prototype.createBoundingBox = function(lat1, lng1, lat2, lng2) {
     color: "#ff7800",
     weight: 0.5
   }).addTo(this.map);
-  // below code zooms the map to the rectangle bounds, may need at some point
-  // this.map.fitBounds(bounds);
-};
-
-MapView.prototype.getBounds = function(lat, lng) {
-  const point = L.latLng(lat, lng);
-  // console.log(`This is ${lat} and ${lng} to 5 (metres)`, point.toBounds(5));
 };
 
 module.exports = MapView;
