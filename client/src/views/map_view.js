@@ -7,6 +7,7 @@ const MapView = function() {
     "pk.eyJ1Ijoic2llcnJhdGFuZ28zNCIsImEiOiJjanVvNW96bDcwbXN4NDRwcDhhcGV3YWx3In0.Sz0BPdrbZfoIjICX83oGhA";
   this.lat = 0;
   this.lng = 0;
+  this.currentMarker = null;
 };
 
 MapView.prototype.render = function() {
@@ -28,9 +29,16 @@ MapView.prototype.createTileLayer = function() {
 };
 
 MapView.prototype.createMarker = function(lat, lng) {
-  const marker = L.marker([lat, lng]);
-  marker.bindPopup(`You've clicked here at ${lat} ${lng}`).addTo(this.map);
+  if (this.currentMarker) this.currentMarker.remove();
+  this.currentMarker = L.marker([lat, lng]);
+  this.currentMarker.addTo(this.map);
 };
+
+// MapView.prototype.createPopup = function() {
+//   this.currentPopup = L.popup();
+// };
+
+// MapView.prototype.showPopup = function() {};
 
 MapView.prototype.handleClickEvent = function(event) {
   const popup = L.popup();
@@ -41,8 +49,8 @@ MapView.prototype.handleClickEvent = function(event) {
 
 MapView.prototype.bindEvents = function() {
   this.map.on("click", evt => this.handleClickEvent(evt));
-  this.getBounds(51.5, -0.099);
-  this.createBoundingBox("51.503", "-0.101", "51.502", "-0.098");
+  // this.getBounds(51.5, -0.099);
+  // this.createBoundingBox("51.503", "-0.101", "51.502", "-0.098");
 };
 
 MapView.prototype.createBoundingBox = function(lat1, lng1, lat2, lng2) {
