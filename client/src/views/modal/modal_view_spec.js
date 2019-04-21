@@ -2,7 +2,7 @@ const jsdom = require("mocha-jsdom");
 const expect = require("chai").expect;
 const Modal = require("./modal_view");
 
-describe("Modal", function() {
+describe("Modal View", function() {
   jsdom({
     url: "http://localhost"
   });
@@ -49,9 +49,30 @@ describe("Modal", function() {
         expect(this.backdrop.style.opacity).to.eql("0.9");
       });
     });
+  });
 
-    describe("backdrop click", function() {
-      xit("should close the modal when the backdrop is clicked", function() {});
+  describe("modal", function() {
+    before(function() {
+      this.backdrop = document.getElementById("modal-backdrop");
+    });
+    it("renders", function() {
+      expect(document.getElementById("modal")).to.not.be.undefined;
+      expect(document.getElementById("modal")).to.not.be.null;
+    });
+  });
+
+  describe("modal flow", function() {
+    describe("click modal", function() {
+      it("should not close the modal when the modal is clicked", function() {
+        document.getElementById("modal").click();
+        expect(document.getElementById("modal")).to.not.be.null;
+      });
+    });
+    describe("click backdrop", function() {
+      it("should close the modal when the backdrop is clicked", function() {
+        document.getElementById("modal-backdrop").click();
+        expect(document.getElementById("modal-backdrop")).to.be.null;
+      });
     });
   });
 });
