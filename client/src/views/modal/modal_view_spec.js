@@ -96,34 +96,4 @@ describe("Modal View", function() {
       });
     });
   });
-
-  describe("position options", function() {
-    xit("can be positioned top left", function() {
-      this.modal.top().left();
-    });
-    xit("can be positioned left", function() {
-      this.modal.left();
-    });
-    xit("can be positioned bottom left", function() {
-      this.modal.bottom().left();
-    });
-    xit("can be positioned bottom", function() {
-      this.modal.bottom();
-    });
-    xit("can be positioned bottom right", function() {
-      this.modal.bottom().right();
-    });
-    xit("can be positioned right", function() {
-      this.modal.right();
-    });
-    xit("can be positioned top right", function() {
-      this.modal.top().right();
-    });
-    xit("can be positioned top", function() {
-      this.modal.top();
-    });
-    xit("can be positioned center", function() {
-      this.modal.center();
-    });
-  });
 });

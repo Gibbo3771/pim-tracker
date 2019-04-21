@@ -49,7 +49,7 @@ Modal.prototype.createBackDrop = function() {
 Modal.prototype.create = function() {
   this.container = document.createElement("div");
   this.container.id = "modal";
-  this.container.style.position = "relative";
+  this.container.style.position = "absolute";
   this.container.style.zIndex = "1000";
   this.container.style.width = this.width;
   this.container.style.height = this.height;
@@ -70,6 +70,15 @@ Modal.prototype.backdropClicked = function(evt) {
 Modal.prototype.close = function() {
   document.getElementById("modal-backdrop").remove();
   if (this.onClose) this.onClose();
+};
+
+Modal.prototype.center = function(offsetX, offsetY) {
+  this.container.style.top = "50%";
+  this.container.style.right = "50%";
+  this.container.style.transform = "translate(50%, -50%)";
+  this.container.style.transform =
+    "translate(" + offsetX + "px, " + offsetY + "px)";
+  return this;
 };
 
 module.exports = Modal;
