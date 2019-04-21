@@ -5,6 +5,8 @@ const MapView = function() {
   this.map = null;
   this.accessToken =
     "pk.eyJ1Ijoic2llcnJhdGFuZ28zNCIsImEiOiJjanVvNW96bDcwbXN4NDRwcDhhcGV3YWx3In0.Sz0BPdrbZfoIjICX83oGhA";
+  this.lat = 0;
+  this.lng = 0;
 };
 
 MapView.prototype.render = function() {
@@ -27,33 +29,23 @@ MapView.prototype.createTileLayer = function() {
 
 MapView.prototype.createMarker = function(lat, lng) {
   const marker = L.marker([lat, lng]);
-  marker
-    .bindPopup(`You've clicked here at ${lat} ${lng}`)
-    .openPopup() //doesn't open with the marker. must be clicked to get pop up
-    .addTo(this.map);
+  marker.bindPopup(`You've clicked here at ${lat} ${lng}`).addTo(this.map);
 };
 
-MapView.prototype.clickEvent = function() {
+MapView.prototype.handleClickEvent = function(event) {
   const popup = L.popup();
-  function onMapClick(event) {
-    console.log(event.latlng);
-    console.log(popup);
-    return popup.setLatLng(event.latlng);
-    // .setContent("You clicked the map at " + event.latlng.toString()); //<-- doesn't work as expected from the quick start guide
-    // .openOn(this.map); //<-- console errors with this
-  }
-
-  this.map.on("click", onMapClick);
+  this.lat = event.latlng.lat;
+  this.lng = event.latlng.lng;
+  this.createMarker(this.lat, this.lng);
 };
 
 MapView.prototype.bindEvents = function() {
-  this.clickEvent();
-  this.createMarker("51.50", "-0.099");
+  this.map.on("click", evt => this.handleClickEvent(evt));
   this.getBounds(51.5, -0.099);
-  this.makeRectangle("51.503", "-0.101", "51.502", "-0.098");
+  this.createBoundingBox("51.503", "-0.101", "51.502", "-0.098");
 };
 
-MapView.prototype.makeRectangle = function(lat1, lng1, lat2, lng2) {
+MapView.prototype.createBoundingBox = function(lat1, lng1, lat2, lng2) {
   const bounds = [[lat1, lng1], [lat2, lng2]];
   L.rectangle(bounds, { color: "#ff7800", weight: 0.5 }).addTo(this.map);
   // below code zooms the map to the rectangle bounds, may need at some point
@@ -62,7 +54,7 @@ MapView.prototype.makeRectangle = function(lat1, lng1, lat2, lng2) {
 
 MapView.prototype.getBounds = function(lat, lng) {
   const point = L.latLng(lat, lng);
-  console.log(`This is ${lat} and ${lng} to 5 (metres)`, point.toBounds(5));
+  // console.log(`This is ${lat} and ${lng} to 5 (metres)`, point.toBounds(5));
 };
 
 module.exports = MapView;
