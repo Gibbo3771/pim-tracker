@@ -48,6 +48,10 @@ describe("Modal View", function() {
       it("should have an opacity of 0.9", function() {
         expect(this.backdrop.style.opacity).to.eql("0.9");
       });
+      it("should be fixed and at the top left corner", function() {
+        expect(this.backdrop.style.position).to.eql("fixed");
+        expect(this.backdrop.style.top).to.eql("0px");
+      });
     });
   });
 
