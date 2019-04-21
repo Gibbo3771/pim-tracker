@@ -1,5 +1,6 @@
 const jsdom = require("mocha-jsdom");
 const expect = require("chai").expect;
+const sinon = require("sinon");
 const Modal = require("./modal_view");
 
 describe("Modal View", function() {
@@ -7,18 +8,28 @@ describe("Modal View", function() {
     url: "http://localhost"
   });
 
+  const onOpen = sinon.spy();
+  const onBackdropClick = sinon.spy();
+  const onClose = sinon.spy();
+
   before(function() {
     this.modal = new Modal(
       "150px",
       "150px",
       "0.9",
-      document.createElement("div")
+      document.createElement("div"),
+      onOpen,
+      onBackdropClick,
+      onClose
     );
   });
 
-  describe("stability", function() {
+  describe("render", function() {
     it("renders without crashing", function() {
       this.modal.render();
+      it("calls onOpen when rendered", function() {
+        expect(onOpen.called).to.be.true;
+      });
     });
   });
 
@@ -76,6 +87,12 @@ describe("Modal View", function() {
       it("should close the modal when the backdrop is clicked", function() {
         document.getElementById("modal-backdrop").click();
         expect(document.getElementById("modal-backdrop")).to.be.null;
+      });
+      it("should call onBackdropClick", function() {
+        expect(onBackdropClick.called).to.be.true;
+      });
+      it("should call onClose", function() {
+        expect(onClose.called).to.be.true;
       });
     });
   });

@@ -1,21 +1,27 @@
-const PubSub = require("../../helpers/pub_sub");
-
-const events = {
-  opened: "Modal:opened",
-  backdropClicked: "Modal:backdrop-clicked",
-  closed: "Modal:closed"
-};
-
 // Create a new modal with the given max width, height and current opacity.
 // The content type must be a div node
-// @
-const Modal = function(width, height, opacity, content = null) {
+const Modal = function(
+  width,
+  height,
+  opacity,
+  content = null,
+  defaultBackdropOnClick = true,
+  onOpen = null,
+  onBackdropClick = null,
+  onClose = null
+) {
   this.backdrop = null;
   this.container = null;
   this.width = width;
   this.height = height;
   this.opacity = opacity;
   this.content = content;
+  this.defaultBackdropOnClick = defaultBackdropOnClick;
+
+  // Callbacks
+  this.onOpen = onOpen;
+  this.onBackdropClick = onBackdropClick;
+  this.onClose = onClose;
 };
 
 // Renders the modal, but only if content has been set
@@ -23,7 +29,7 @@ Modal.prototype.render = function() {
   if (this.content === null) return; // Never render if content is not set
   document.body.appendChild(this.createBackDrop());
   this.backdrop.appendChild(this.create());
-  PubSub.publish(events.opened);
+  if (this.onOpen) this.onOpen();
 };
 
 Modal.prototype.createBackDrop = function() {
@@ -52,17 +58,17 @@ Modal.prototype.create = function() {
 
 // This is called whenever the backdrop is clicked
 Modal.prototype.backdropClicked = function(evt) {
-  PubSub.publish(events.backdropClicked);
-  this.close(evt);
-};
-
-// Called to remove the modal from the tree
-Modal.prototype.close = function(evt) {
   if (evt.target !== this.backdrop) return;
   evt.preventDefault();
   evt.stopPropagation();
+  if (this.onBackdropClick) this.onBackdropClick();
+  if (this.defaultBackdropOnClick) this.close();
+};
+
+// Called to remove the modal from the tree
+Modal.prototype.close = function() {
   document.getElementById("modal-backdrop").remove();
-  PubSub.publish(events.closed);
+  if (this.onClose) this.onClose();
 };
 
 module.exports = Modal;
