@@ -1,3 +1,14 @@
+const PubSub = require("../../helpers/pub_sub");
+
+const events = {
+  opened: "Modal:opened",
+  backdropClicked: "Modal:backdrop-clicked",
+  closed: "Modal:closed"
+};
+
+// Create a new modal with the given max width, height and current opacity.
+// The content type must be a div node
+// @
 const Modal = function(width, height, opacity, content = null) {
   this.backdrop = null;
   this.container = null;
@@ -7,10 +18,12 @@ const Modal = function(width, height, opacity, content = null) {
   this.content = content;
 };
 
+// Renders the modal, but only if content has been set
 Modal.prototype.render = function() {
   if (this.content === null) return; // Never render if content is not set
   document.body.appendChild(this.createBackDrop());
   this.backdrop.appendChild(this.create());
+  PubSub.publish(events.opened);
 };
 
 Modal.prototype.createBackDrop = function() {
@@ -22,7 +35,7 @@ Modal.prototype.createBackDrop = function() {
   this.backdrop.style.height = "100vh";
   this.backdrop.style.zIndex = "999";
   this.backdrop.style.background = "rgba(0, 0, 0," + this.opacity + ")";
-  this.backdrop.addEventListener("click", evt => this.close(evt));
+  this.backdrop.addEventListener("click", evt => this.backdropClicked(evt));
   return this.backdrop;
 };
 
@@ -37,11 +50,19 @@ Modal.prototype.create = function() {
   return this.container;
 };
 
+// This is called whenever the backdrop is clicked
+Modal.prototype.backdropClicked = function(evt) {
+  PubSub.publish(events.backdropClicked);
+  this.close(evt);
+};
+
+// Called to remove the modal from the tree
 Modal.prototype.close = function(evt) {
   if (evt.target !== this.backdrop) return;
   evt.preventDefault();
   evt.stopPropagation();
   document.getElementById("modal-backdrop").remove();
+  PubSub.publish(events.closed);
 };
 
 module.exports = Modal;
