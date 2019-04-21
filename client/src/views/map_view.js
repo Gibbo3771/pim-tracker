@@ -8,6 +8,7 @@ const MapView = function() {
   this.lat = 0;
   this.lng = 0;
   this.currentMarker = null;
+  this.currentBoundingBox = null;
 };
 
 MapView.prototype.render = function() {
@@ -34,17 +35,18 @@ MapView.prototype.createMarker = function(lat, lng) {
   this.currentMarker.addTo(this.map);
 };
 
-// MapView.prototype.createPopup = function() {
-//   this.currentPopup = L.popup();
-// };
-
-// MapView.prototype.showPopup = function() {};
-
 MapView.prototype.handleClickEvent = function(event) {
   const popup = L.popup();
   this.lat = event.latlng.lat;
   this.lng = event.latlng.lng;
   this.createMarker(this.lat, this.lng);
+  this.createBoundingBox(
+    this.lat - 0.01,
+    this.lng - 0.02,
+    this.lat + 0.01,
+    this.lng + 0.02
+  );
+  console.log();
 };
 
 MapView.prototype.bindEvents = function() {
@@ -54,8 +56,12 @@ MapView.prototype.bindEvents = function() {
 };
 
 MapView.prototype.createBoundingBox = function(lat1, lng1, lat2, lng2) {
+  if (this.currentBoundingBox) this.currentBoundingBox.remove();
   const bounds = [[lat1, lng1], [lat2, lng2]];
-  L.rectangle(bounds, { color: "#ff7800", weight: 0.5 }).addTo(this.map);
+  this.currentBoundingBox = L.rectangle(bounds, {
+    color: "#ff7800",
+    weight: 0.5
+  }).addTo(this.map);
   // below code zooms the map to the rectangle bounds, may need at some point
   // this.map.fitBounds(bounds);
 };
