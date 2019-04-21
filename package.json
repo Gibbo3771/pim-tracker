@@ -4,7 +4,7 @@
   "description": "You have been approached by the Metropolitan Police Service. Your task is to build a crime tracker app that allows the user to view crime in the area of London.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha './**/*_spec.js'",
     "build": "webpack -w"
   },
   "repository": {
@@ -23,6 +23,8 @@
     "webpack-cli": "^3.3.0"
   },
   "devDependencies": {
-    "mocha": "^6.1.4"
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "mocha-jsdom": "^2.0.0"
   }
 }
