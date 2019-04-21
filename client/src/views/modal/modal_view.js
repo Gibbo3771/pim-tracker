@@ -30,6 +30,7 @@ Modal.prototype.render = function() {
   document.body.appendChild(this.createBackDrop());
   this.backdrop.appendChild(this.create());
   if (this.onOpen) this.onOpen();
+  return this;
 };
 
 Modal.prototype.createBackDrop = function() {
