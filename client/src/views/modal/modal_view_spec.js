@@ -16,15 +16,15 @@ describe("Modal", function() {
     );
   });
 
-  describe("valid content", function() {
-    it("has a div as it's content node", function() {
-      expect(this.modal.content.nodeName).eql("DIV");
+  describe("stability", function() {
+    it("renders without crashing", function() {
+      this.modal.render();
     });
   });
 
-  describe("render", function() {
-    it("renders without crashing", function() {
-      this.modal.render();
+  describe("valid content", function() {
+    it("has a div as it's content node", function() {
+      expect(this.modal.content.nodeName).eql("DIV");
     });
   });
 
@@ -33,8 +33,9 @@ describe("Modal", function() {
       this.backdrop = document.getElementById("modal-backdrop");
     });
 
-    it("adds a fullscreen backdrop", function() {
+    it("renders a fullscreen backdrop", function() {
       expect(this.backdrop).to.not.be.undefined;
+      expect(this.backdrop).to.not.be.null;
     });
 
     describe("backdrop dimensions", function() {
