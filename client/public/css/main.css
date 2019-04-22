@@ -83,8 +83,8 @@ header {
 /* latest 10 crimes */
 #latest-10 {
   font-size: 1.2em;
-  text-align: center;
   margin-top: 30px;
+  margin-left: 5px;
 }
 /* list table */
 #information {
@@ -100,7 +100,6 @@ header {
   grid-template-rows: auto;
 }
 .itemContainer > div {
-  margin: 5px;
   font-size: 1.2em;
 }
 .categoryType {
