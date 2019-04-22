@@ -6,4 +6,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const map = new MapView();
   map.render();
+  map.bindEvents();
 });
