@@ -17,7 +17,6 @@ CrimeListView.prototype.render = function() {
 CrimeListView.prototype.populate = function(evt) {
   this.clear();
   const crimeData = evt.detail;
-  console.log("this is crime data", crimeData);
   for (crime of crimeData) {
     this.crimes.push(new Crime(crime));
   }
@@ -26,6 +25,8 @@ CrimeListView.prototype.populate = function(evt) {
 
 CrimeListView.prototype.clear = function() {
   document.querySelector("#information").innerHTML = "";
+  document.querySelector("#number").innerHTML = "";
+  document.querySelector("#latest-10").innerHTML = "";
   this.crimes = [];
 };
 
@@ -37,6 +38,15 @@ CrimeListView.prototype.bindEvents = function() {
     this.getNumberOfCrimes(evt);
     this.latestCrimes(evt);
   });
+  PubSub.subscribe("App:data-overload", () => {
+    this.overload();
+  });
+};
+
+CrimeListView.prototype.overload = function() {
+  const number = document.querySelector("#number");
+  this.clear();
+  number.textContent = "Please Select a Smaller Area";
 };
 
 CrimeListView.prototype.getNumberOfCrimes = function(evt) {

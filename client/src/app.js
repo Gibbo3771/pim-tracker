@@ -10,7 +10,6 @@ const getData = evt => {
   );
 
   const { latlng1, latlng2, latlng3, latlng4 } = evt.detail;
-  console.log("stuff", latlng1, latlng2);
   rq.getCrimeInRectangle(
     latlng1.lat,
     latlng1.lng,
@@ -20,10 +19,14 @@ const getData = evt => {
     latlng3.lng,
     latlng4.lat,
     latlng4.lng
-  ).then(res => {
-    PubSub.publish("App:top-10-crime", res.splice(0, 10));
-    PubSub.publish("App:number-of-crime", res.length);
-  });
+  )
+    .then(res => {
+      PubSub.publish("App:top-10-crime", res.splice(0, 10));
+      PubSub.publish("App:number-of-crime", res.length);
+    })
+    .catch(res => {
+      PubSub.publish("App:data-overload");
+    });
 };
 
 document.addEventListener("DOMContentLoaded", () => {

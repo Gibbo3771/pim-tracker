@@ -40,7 +40,7 @@ RequestHelper.prototype.getCrimeInRectangle = function(
 RequestHelper.prototype.request = function(params) {
   return fetch(this.createUrl(params))
     .then(response => response.json())
-    .catch(err => console.error(err));
+    .catch(() => {});
 };
 
 RequestHelper.prototype.createUrl = function(params) {
