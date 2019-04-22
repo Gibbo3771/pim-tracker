@@ -10,26 +10,41 @@ RequestHelper.prototype.get = function() {
     .catch(err => console.error(err));
 };
 
-RequestHelper.prototype.getCrimesAtLocation = function(
-  date,
-  lat,
-  long,
-  radius
-) {
+RequestHelper.prototype.getCrimeAtLocation = function(date, lat, long) {
   const params = {
     date: date,
     lat: lat,
-    long: long,
-    radius: radius
+    long: long
   };
 
+  return this.request(params);
+};
+
+RequestHelper.prototype.getCrimeInRectangle = function(
+  lat1,
+  lng1,
+  lat2,
+  lng2,
+  lat3,
+  lng3,
+  lat4,
+  lng4
+) {
+  const params = {
+    poly: `${lat1},${lng1}:${lat2},${lng2}:${lat3},${lng3}:${lat4},${lng4}`
+  };
+
+  return this.request(params);
+};
+
+RequestHelper.prototype.request = function(params) {
   return fetch(this.createUrl(params))
     .then(response => response.json())
-    .catch(err => console.error(err));
+    .catch(() => {});
 };
 
 RequestHelper.prototype.createUrl = function(params) {
-  return `${this.url}?${queryString.stringify(params)}`;
+  return decodeURIComponent(`${this.url}?${queryString.stringify(params)}`);
 };
 
 module.exports = RequestHelper;
