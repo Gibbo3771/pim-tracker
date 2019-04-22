@@ -33,7 +33,7 @@ RequestHelper.prototype.getCrimeInRectangle = function(
   const params = {
     poly: `${lat1},${lng1}:${lat2},${lng2}:${lat3},${lng3}:${lat4},${lng4}`
   };
-  console.log(params.poly);
+
   return this.request(params);
 };
 

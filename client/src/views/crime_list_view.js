@@ -24,7 +24,9 @@ CrimeListView.prototype.populate = function(evt) {
 };
 
 CrimeListView.prototype.bindEvents = function() {
-  PubSub.subscribe("Crime:crimes-ready", this.populate);
+  PubSub.subscribe("App:top-10-crime", evt => {
+    this.populate(evt);
+  });
 };
 
 module.exports = CrimeListView;
