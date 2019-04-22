@@ -63,6 +63,11 @@ MapView.prototype.createMarker = function(lat, lng) {
   if (this.currentMarker) this.currentMarker.remove();
   this.currentMarker = L.marker([lat, lng]);
   this.currentMarker.addTo(this.map);
+  this.currentMarker
+    .bindPopup("Click anywhere on the map to move me!", {
+      closeButton: false
+    })
+    .openPopup();
   this.renderSelectionRectangle();
 };
 
