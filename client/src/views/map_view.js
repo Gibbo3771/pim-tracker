@@ -8,6 +8,7 @@ const MapView = function() {
   this.currentBoundingBox = null;
 
   this.defaultLatlng = { lat: 51.505, lng: -0.09 };
+  this.currentMarker = null;
   this.leftMarker = null;
   this.rightMarker = null;
 
@@ -51,12 +52,23 @@ MapView.prototype.createMarkers = function() {
   this.rightMarker.addTo(this.map);
 };
 
+MapView.prototype.createMarker = function(lat, lng) {
+  if (this.currentMarker) this.currentMarker.remove();
+  this.currentMarker = L.marker([lat, lng]);
+  this.currentMarker.addTo(this.map);
+};
+
 MapView.prototype.handleMarkerDrag = function() {
   this.renderSelectionRectangle();
 };
 
 MapView.prototype.handleMarkerDragEnd = function() {
   this.zoom();
+};
+
+MapView.prototype.handleMapClick = function(evt) {
+  const { lat, lng } = evt.latlng;
+  this.createMarker(lat, lng);
 };
 
 MapView.prototype.createBoundingBox = function() {
@@ -71,6 +83,7 @@ MapView.prototype.zoom = function() {
 };
 
 MapView.prototype.bindEvents = function() {
+  this.map.on("click", evt => this.handleMapClick(evt));
   this.rightMarker.on("drag", evt => this.handleMarkerDrag(evt));
   this.leftMarker.on("drag", evt => this.handleMarkerDrag(evt));
   this.leftMarker.on("dragend ", evt => this.handleMarkerDragEnd(evt));
