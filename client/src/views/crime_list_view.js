@@ -7,9 +7,7 @@ const CrimeListView = function() {
 };
 
 CrimeListView.prototype.render = function() {
-  if (this.crimes.length === 0) return;
-  this.crimes.forEach(crime => {
-    const crimeItemView = new CrimeItemView(crime);
+  this.crimes.forEach(crimeItemView => {
     crimeItemView.render();
   });
 };
@@ -18,7 +16,7 @@ CrimeListView.prototype.populate = function(evt) {
   this.clear();
   const crimeData = evt.detail;
   for (crime of crimeData) {
-    this.crimes.push(new Crime(crime));
+    this.crimes.push(new CrimeItemView(new Crime(crime)));
   }
   this.render();
 };
