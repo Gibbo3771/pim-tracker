@@ -35,11 +35,21 @@ CrimeListView.prototype.bindEvents = function() {
   });
   PubSub.subscribe("App:number-of-crime", evt => {
     this.getNumberOfCrimes(evt);
+    this.latestCrimes(evt);
   });
 };
 
 CrimeListView.prototype.getNumberOfCrimes = function(evt) {
   const container = document.querySelector("#number");
   container.textContent = `Total Number of Crimes in this Area: ${evt.detail}`;
+};
+
+CrimeListView.prototype.latestCrimes = function(evt) {
+  let num = evt.detail;
+  if (num > 10) {
+    num = 10;
+  }
+  const container = document.querySelector("#latest-10");
+  container.textContent = `Latest ${num} Crimes`;
 };
 module.exports = CrimeListView;
