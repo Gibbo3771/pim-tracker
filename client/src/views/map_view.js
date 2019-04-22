@@ -6,6 +6,7 @@ const MapView = function() {
   this.accessToken =
     "pk.eyJ1Ijoic2llcnJhdGFuZ28zNCIsImEiOiJjanVvNW96bDcwbXN4NDRwcDhhcGV3YWx3In0.Sz0BPdrbZfoIjICX83oGhA";
   this.currentBoundingBox = null;
+  this.selectionRect = null;
 
   this.defaultLatlng = { lat: 51.505, lng: -0.09 };
   this.currentMarker = null;
@@ -64,6 +65,24 @@ MapView.prototype.handleMarkerDrag = function() {
 
 MapView.prototype.handleMarkerDragEnd = function() {
   this.zoom();
+  PubSub.publish("MapView:area-modified", {
+    latlng1: {
+      lat: this.selectionRect._latlngs[0][0].lat.toFixed(3),
+      lng: this.selectionRect._latlngs[0][0].lng.toFixed(3)
+    },
+    latlng2: {
+      lat: this.selectionRect._latlngs[0][1].lat.toFixed(3),
+      lng: this.selectionRect._latlngs[0][1].lng.toFixed(3)
+    },
+    latlng3: {
+      lat: this.selectionRect._latlngs[0][2].lat.toFixed(3),
+      lng: this.selectionRect._latlngs[0][2].lng.toFixed(3)
+    },
+    latlng4: {
+      lat: this.selectionRect._latlngs[0][3].lat.toFixed(3),
+      lng: this.selectionRect._latlngs[0][3].lng.toFixed(3)
+    }
+  });
 };
 
 MapView.prototype.handleMapClick = function(evt) {
