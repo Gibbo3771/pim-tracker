@@ -1,3 +1,8 @@
+html,
+body {
+  margin: 0;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -33,4 +38,17 @@ button.delete {
   height: 50vh;
   width: auto;
   margin: 5rem;
+}
+
+#modal {
+  position: relative;
+  z-index: 1000;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
 }
