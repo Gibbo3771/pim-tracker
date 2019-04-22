@@ -21,7 +21,7 @@ const getData = evt => {
     latlng4.lat,
     latlng4.lng
   ).then(res => {
-    PubSub.publish("App:top-10-crime", res.slice(10));
+    PubSub.publish("App:top-10-crime", res.splice(0, 10));
   });
 };
 

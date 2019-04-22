@@ -7,8 +7,8 @@ const CrimeListView = function() {
 };
 
 CrimeListView.prototype.render = function() {
+  console.log(document.querySelector("#information").innerHTML);
   if (this.crimes.length === 0) return;
-  const crimeListView = document.createElement("div");
   this.crimes.forEach(crime => {
     const crimeItemView = new CrimeItemView(crime);
     crimeItemView.render();
