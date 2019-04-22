@@ -17,6 +17,7 @@ CrimeListView.prototype.render = function() {
 CrimeListView.prototype.populate = function(evt) {
   this.clear();
   const crimeData = evt.detail;
+  console.log("this is crime data", crimeData);
   for (crime of crimeData) {
     this.crimes.push(new Crime(crime));
   }
@@ -32,6 +33,13 @@ CrimeListView.prototype.bindEvents = function() {
   PubSub.subscribe("App:top-10-crime", evt => {
     this.populate(evt);
   });
+  PubSub.subscribe("App:number-of-crime", evt => {
+    this.getNumberOfCrimes(evt);
+  });
 };
 
+CrimeListView.prototype.getNumberOfCrimes = function(evt) {
+  const container = document.querySelector("#number");
+  container.textContent = `Total Number of Crimes in this Area: ${evt.detail}`;
+};
 module.exports = CrimeListView;
