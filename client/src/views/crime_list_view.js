@@ -15,7 +15,7 @@ CrimeListView.prototype.render = function() {
 CrimeListView.prototype.populate = function(evt) {
   this.clear();
   const crimeData = evt.detail;
-  for (crime of crimeData) {
+  for (let crime of crimeData) {
     this.crimes.push(new CrimeItemView(new Crime(crime)));
   }
   this.render();
