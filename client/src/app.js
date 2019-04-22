@@ -30,11 +30,12 @@ const getData = evt => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  PubSub.subscribe("MapView:area-modified", getData);
+
   const map = new MapView();
   map.render();
   map.bindEvents();
 
   const listView = new CrimeListView();
   listView.bindEvents();
-  PubSub.subscribe("MapView:area-modified", getData);
 });
