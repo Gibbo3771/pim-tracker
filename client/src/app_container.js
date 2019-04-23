@@ -1,5 +1,6 @@
 const PubSub = require("./helpers/pub_sub");
 const RequestHelper = require("./helpers/request_helper");
+const AboutView = require("./views/about_view.js");
 
 const AppContainer = function() {};
 
@@ -16,6 +17,10 @@ AppContainer.prototype.getCrimeInRectangle = function(evt) {
     .catch(res => {
       PubSub.publish("App:data-overload");
     });
+};
+
+AppContainer.prototype.handleAboutButtonClick = function(evt) {
+  new AboutView().render();
 };
 
 AppContainer.prototype.bindEvents = function() {
