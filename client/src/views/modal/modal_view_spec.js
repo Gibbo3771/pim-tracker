@@ -13,8 +13,6 @@ describe("Modal View", function() {
 
   before(function() {
     this.modal = new Modal(
-      "150px",
-      "150px",
       "0.9",
       document.createElement("div"),
       onOpen,
