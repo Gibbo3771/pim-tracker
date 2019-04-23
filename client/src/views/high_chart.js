@@ -1,4 +1,5 @@
 const Highcharts = require("highcharts");
+const PubSub = require("../helpers/pub_sub.js");
 
 const Chart = function() {
   this.chart = Highcharts.chart("high-chart", {
@@ -38,6 +39,12 @@ const Chart = function() {
         data: []
       }
     ]
+  });
+};
+
+Chart.prototype.bindEvents = function() {
+  PubSub.subscribe("CategorisedCrime:refined-crime-data", evt => {
+    this.setData(evt.detail);
   });
 };
 

@@ -86,7 +86,7 @@ CategorisedCrime.prototype.chartifyData = function() {
     i.push(this.allCrimes[key].pct);
     data.push(i);
   }
-  PubSub.publish("CC:chart-data", data);
+  return data;
 };
 
 CategorisedCrime.prototype.getPercentageOf = function(array) {
@@ -94,15 +94,19 @@ CategorisedCrime.prototype.getPercentageOf = function(array) {
     const category = this.allCrimes[key];
     const arrayLength = category.crimes.length;
     category.pct = (arrayLength / this.totalCrimes) * 100;
-    console.log(category.pct);
   }
+};
+
+CategorisedCrime.prototype.setPercentages = function() {
+  const array = this.getPercentageOf();
+  console.log(array);
 };
 
 CategorisedCrime.prototype.bindEvents = function() {
   PubSub.subscribe("App:all-crime", evt => {
     this.filterByCategory(evt);
-    this.chartifyData();
     this.getPercentageOf();
+    PubSub.publish("CategorisedCrime:refined-crime-data", this.chartifyData());
   });
   PubSub.subscribe("App:number-of-crime", evt => {
     this.totalCrimes = evt.detail;
