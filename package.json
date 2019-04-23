@@ -4,8 +4,7 @@
   "description": "You have been approached by the Metropolitan Police Service. Your task is to build a crime tracker app that allows the user to view crime in the area of London.",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "test": "mocha './**/*_spec.js' && jshint './client/src/'",
+    "test": "mocha './client/**/*_spec.js' && jshint './client/src/'",
     "build": "webpack -w"
   },
   "repository": {
@@ -25,6 +24,8 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "jsdom": "15.0.0",
+    "jsdom-global": "3.0.2",
     "express": "^4.16.4",
     "jshint": "^2.10.2",
     "mocha": "^6.1.4",

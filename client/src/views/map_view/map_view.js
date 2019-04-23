@@ -1,5 +1,5 @@
 require("leaflet");
-const PubSub = require("../helpers/pub_sub.js");
+const PubSub = require("../../helpers/pub_sub.js");
 
 const MapView = function() {
   this.map = null;
@@ -8,42 +8,27 @@ const MapView = function() {
   this.currentBoundingBox = null;
   this.selectionRect = null;
 
-  this.defaultLatlng = { lat: 51.504, lng: -0.127 };
-  this.defaultOffset = {
-    pointA: {
-      lat: 0.005,
-      lng: 0.01
-    },
-    pointB: {
-      lat: 0.005,
-      lng: 0.01
-    }
-  };
-  this.currentOffset = this.defaultOffset;
-  this.currentMarker = null;
+  this.defaultLatlng = { lat: 51.505, lng: -0.09 };
+  this.leftMarker = null;
+  this.rightMarker = null;
 
   const { lat, lng } = this.defaultLatlng;
   this.map = L.map("map").setView([lat, lng], 13);
-  this.createMarker(lat, lng);
-  this.notify();
+  this.createMarkers();
   this.zoom();
 };
 
 MapView.prototype.render = function() {
   this.createTileLayer();
+  this.renderSelectionRectangle();
 };
 
-MapView.prototype.renderSelectionRectangle = function(
-  offset = this.currentOffset
-) {
+MapView.prototype.renderSelectionRectangle = function() {
   if (this.selectionRect) this.selectionRect.remove();
-  this.selectionRect = L.rectangle(
-    this.createBoundingBox(offset.pointA, offset.pointB),
-    {
-      color: "#ff7800",
-      weight: 5
-    }
-  ).addTo(this.map);
+  this.selectionRect = L.rectangle(this.createBoundingBox(), {
+    color: "#ff7800",
+    weight: 0.5
+  }).addTo(this.map);
 };
 
 MapView.prototype.createTileLayer = function() {
@@ -59,19 +44,20 @@ MapView.prototype.createTileLayer = function() {
   ).addTo(this.map);
 };
 
-MapView.prototype.createMarker = function(lat, lng) {
-  if (this.currentMarker) this.currentMarker.remove();
-  this.currentMarker = L.marker([lat, lng]);
-  this.currentMarker.addTo(this.map);
-  this.currentMarker
-    .bindPopup("Click anywhere on the map to move me!", {
-      closeButton: false
-    })
-    .openPopup();
+MapView.prototype.createMarkers = function() {
+  const { lat, lng } = this.defaultLatlng;
+  this.leftMarker = L.marker([lat - 0.01, lng - 0.01], { draggable: true });
+  this.rightMarker = L.marker([lat + 0.01, lng + 0.01], { draggable: true });
+  this.leftMarker.addTo(this.map);
+  this.rightMarker.addTo(this.map);
+};
+
+MapView.prototype.handleMarkerDrag = function() {
   this.renderSelectionRectangle();
 };
 
-MapView.prototype.notify = function() {
+MapView.prototype.handleMarkerDragEnd = function() {
+  this.zoom();
   PubSub.publish("MapView:area-modified", {
     latlng1: {
       lat: this.selectionRect._latlngs[0][0].lat.toFixed(3),
@@ -92,35 +78,22 @@ MapView.prototype.notify = function() {
   });
 };
 
-MapView.prototype.handleMapClick = function(evt) {
-  const { lat, lng } = evt.latlng;
-  this.createMarker(lat, lng);
-  this.notify();
-  this.zoom();
-};
-
-MapView.prototype.createBoundingBox = function(pointA, pointB) {
+MapView.prototype.createBoundingBox = function() {
   return [
-    [
-      this.currentMarker._latlng.lat - (pointA ? pointA.lat : 0),
-      this.currentMarker._latlng.lng - (pointA ? pointA.lng : 0)
-    ],
-    [
-      this.currentMarker._latlng.lat + (pointB ? pointB.lat : 0),
-      this.currentMarker._latlng.lng + (pointB ? pointB.lng : 0)
-    ]
+    [this.leftMarker._latlng.lat, this.leftMarker._latlng.lng],
+    [this.rightMarker._latlng.lat, this.rightMarker._latlng.lng]
   ];
 };
 
 MapView.prototype.zoom = function() {
-  const { pointA, pointB } = this.currentOffset;
-  this.map.fitBounds(this.createBoundingBox(pointA, pointB), {
-    padding: [0.5, 0.5]
-  });
+  this.map.fitBounds(this.createBoundingBox(), { padding: [0.5, 0.5] });
 };
 
 MapView.prototype.bindEvents = function() {
-  this.map.on("click", evt => this.handleMapClick(evt));
+  this.rightMarker.on("drag", evt => this.handleMarkerDrag(evt));
+  this.leftMarker.on("drag", evt => this.handleMarkerDrag(evt));
+  this.leftMarker.on("dragend ", evt => this.handleMarkerDragEnd(evt));
+  this.rightMarker.on("dragend ", evt => this.handleMarkerDragEnd(evt));
 };
 
 module.exports = MapView;
