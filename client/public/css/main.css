@@ -111,3 +111,13 @@ header {
 .date {
   grid-area: date;
 }
+
+/* High Chart */
+#high-chart {
+  width: auto;
+  height: 750px;
+}
+
+tspan {
+  font-size: 24px;
+}
