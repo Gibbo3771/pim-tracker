@@ -32,6 +32,9 @@ CrimeListView.prototype.bindEvents = function() {
   PubSub.subscribe("App:top-10-crime", evt => {
     this.populate(evt);
   });
+  PubSub.subscribe("App:total-number-of-crime-array", evt => {
+    this.populate(evt);
+  });
   PubSub.subscribe("App:number-of-crime", evt => {
     this.getNumberOfCrimes(evt);
     this.latestCrimes(evt);
