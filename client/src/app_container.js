@@ -19,10 +19,11 @@ AppContainer.prototype.getCrimeInRectangle = function(evt) {
     });
 };
 
-
 AppContainer.prototype.handleCrimeItemClicked = function(evt) {
   const crimeItem = evt.detail;
   new CrimeDetailView(crimeItem).render();
+};
+
 AppContainer.prototype.handleAboutButtonClick = function(evt) {
   new AboutView().render();
 };
