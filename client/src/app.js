@@ -4,6 +4,7 @@ const CrimeListView = require("./views/crime_list_view.js");
 const CategorisedCrime = require("./models/categorised_crime.js");
 const PubSub = require("./helpers/pub_sub.js");
 const RequestHelper = require("./helpers/request_helper.js");
+const CrimeDetailView = require("./views/crime_detail_view");
 const AboutView = require("./views/about_view.js");
 const Chart = require("./views/high_chart.js");
 require("leaflet");

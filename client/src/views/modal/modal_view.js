@@ -1,4 +1,4 @@
-// Create a new modal with the given max width, height and current opacity.
+// Create a new modal with the given opacity.
 // The content type must be a div node
 const Modal = function(
   opacity,
