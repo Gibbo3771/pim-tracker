@@ -1,7 +1,7 @@
 const queryString = require("querystring");
 
-const RequestHelper = function(url) {
-  this.url = url;
+const RequestHelper = function() {
+  this.url = null;
 };
 
 RequestHelper.prototype.get = function() {
@@ -28,9 +28,13 @@ RequestHelper.prototype.getCrimeInRectangle = function(
   lat3,
   lng3,
   lat4,
-  lng4
+  lng4,
+  date = new Date()
 ) {
+  console.log("date", date);
+  this.url = "https://data.police.uk/api/crimes-street/all-crime";
   const params = {
+    date: `${date.getFullYear()}-${date.getMonth()}`,
     poly: `${lat1},${lng1}:${lat2},${lng2}:${lat3},${lng3}:${lat4},${lng4}`
   };
 
