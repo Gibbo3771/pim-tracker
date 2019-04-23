@@ -8,34 +8,30 @@ const Chart = function() {
       plotBorderWidth: 0,
       plotShadow: false
     },
-    title: {
-      text: "Browser<br>shares<br>2017",
-      align: "center",
-      verticalAlign: "middle",
-      y: 40
-    },
+    title: { text: null },
     tooltip: {
       pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
     },
     plotOptions: {
       pie: {
+        allowPointSelect: true,
+        cursor: "pointer",
         dataLabels: {
           enabled: true,
-          distance: -50,
+          format: "<b>{point.name}</b>: {point.percentage:.2f} %",
           style: {
-            fontWeight: "bold",
-            color: "white"
+            color:
+              (Highcharts.theme && Highcharts.theme.contrastTextColor) ||
+              "black"
           }
-        },
-        center: ["50%", "75%"],
-        size: "110%"
+        }
       }
     },
     series: [
       {
         type: "pie",
         name: "Category",
-        innerSize: "50%",
+        innerSize: "40%",
         data: []
       }
     ]

@@ -114,6 +114,10 @@ header {
 
 /* High Chart */
 #high-chart {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 750px;
+}
+
+tspan {
+  font-size: 24px;
 }
