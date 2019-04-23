@@ -44,12 +44,12 @@ CrimeListView.prototype.bindEvents = function() {
 CrimeListView.prototype.overload = function() {
   const number = document.querySelector("#number");
   this.clear();
-  number.textContent = "Please Select A Smaller Area";
+  number.textContent = "Please Select a Smaller Area";
 };
 
 CrimeListView.prototype.getNumberOfCrimes = function(evt) {
   const container = document.querySelector("#number");
-  container.textContent = `Total Number Of Crimes In This Area: ${evt.detail}`;
+  container.textContent = `Total Number of Crimes in this Area: ${evt.detail}`;
 };
 
 CrimeListView.prototype.latestCrimes = function(evt) {
