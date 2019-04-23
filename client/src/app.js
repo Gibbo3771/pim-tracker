@@ -1,13 +1,16 @@
 const AppContainer = require("./app_container");
 const MapView = require("./views/map_view/map_view.js");
 const CrimeListView = require("./views/crime_list_view.js");
+const CategorisedCrime = require("./models/categorised_crime.js");
 const PubSub = require("./helpers/pub_sub.js");
 const RequestHelper = require("./helpers/request_helper.js");
-const createChart = require("./views/high_chart.js");
+const Chart = require("./views/high_chart.js");
 require("leaflet");
 
 document.addEventListener("DOMContentLoaded", () => {
   const appContainer = new AppContainer();
+  const cc = new CategorisedCrime();
+  cc.bindEvents();
   appContainer.bindEvents();
   const map = new MapView();
   map.render();
@@ -16,5 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const listView = new CrimeListView();
   listView.bindEvents();
 
-  createChart();
+  const chart = new Chart();
+  setTimeout(() => {
+    const data = [["Theft", 10], ["Stab", 70]];
+    chart.setData(data);
+  }, 1000);
 });
