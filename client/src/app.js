@@ -21,7 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const chart = new Chart();
   setTimeout(() => {
-    const data = [["Theft", 10], ["Stab", 70]];
+    // const data = [["Theft", 10], ["Stab", 70]];
+    const data = [];
+    console.log(cc);
+    data.push(cc.chartifyData());
     chart.setData(data);
   }, 1000);
 });
