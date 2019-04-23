@@ -7,7 +7,6 @@ describe("Modal View", function() {
   jsdom({
     url: "http://localhost"
   });
-
   const onOpen = sinon.spy();
   const onBackdropClick = sinon.spy();
   const onClose = sinon.spy();
