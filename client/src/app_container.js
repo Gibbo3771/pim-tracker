@@ -5,14 +5,13 @@ const AboutView = require("./views/about_view.js");
 const AppContainer = function() {};
 
 AppContainer.prototype.getCrimeInRectangle = function(evt) {
-  const rq = new RequestHelper(
-    "https://data.police.uk/api/crimes-street/all-crime"
-  );
+  const rq = new RequestHelper();
 
   rq.getCrimeInRectangle(evt.detail)
     .then(res => {
       PubSub.publish("App:top-10-crime", res.splice(0, 10));
       PubSub.publish("App:number-of-crime", res.length);
+      PubSub.publish("App:all-crime", res);
     })
     .catch(res => {
       PubSub.publish("App:data-overload");
