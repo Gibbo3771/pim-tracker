@@ -16,22 +16,15 @@ RequestHelper.prototype.getCrimeAtLocation = function(date, lat, long) {
     lat: lat,
     long: long
   };
-
   return this.request(params);
 };
 
-RequestHelper.prototype.getCrimeInRectangle = function(
-  lat1,
-  lng1,
-  lat2,
-  lng2,
-  lat3,
-  lng3,
-  lat4,
-  lng4
-) {
+RequestHelper.prototype.getCrimeInRectangle = function(rectangle) {
+  const { latlng1, latlng2, latlng3, latlng4 } = rectangle;
   const params = {
-    poly: `${lat1},${lng1}:${lat2},${lng2}:${lat3},${lng3}:${lat4},${lng4}`
+    poly: `${latlng1.lat},${latlng1.lng}:${latlng2.lat},${latlng2.lng}:${
+      latlng3.lat
+    },${latlng3.lng}:${latlng4.lat},${latlng4.lng}`
   };
 
   return this.request(params);
