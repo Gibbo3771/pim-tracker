@@ -80,7 +80,7 @@ const CategorisedCrime = function() {
 
 CategorisedCrime.prototype.chartifyData = function() {
   const data = [];
-  for (key in this.allCrimes) {
+  for (let key in this.allCrimes) {
     const i = [];
     i.push(this.allCrimes[key].name);
     i.push(this.allCrimes[key].pct);
@@ -90,7 +90,7 @@ CategorisedCrime.prototype.chartifyData = function() {
 };
 
 CategorisedCrime.prototype.getPercentageOf = function(array) {
-  for (key in this.allCrimes) {
+  for (let key in this.allCrimes) {
     const category = this.allCrimes[key];
     const arrayLength = category.crimes.length;
     category.pct = (arrayLength / this.totalCrimes) * 100;
@@ -125,7 +125,7 @@ CategorisedCrime.prototype.get = function() {
 };
 
 CategorisedCrime.prototype.filterByCategory = function(res) {
-  for (crimeData of res.detail) {
+  for (let crimeData of res.detail) {
     switch (crimeData.category) {
       case "anti-social-behaviour":
         this.allCrimes.antiSoc.crimes.push(new Crime(crimeData));
