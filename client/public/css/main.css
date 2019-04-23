@@ -159,6 +159,7 @@ header {
 
 .crime-detail-view-date {
   grid-area: date;
+}
 
 /* About Page */
 .about-view {
@@ -182,7 +183,7 @@ header {
 
 .github-link {
   font-size: 2.5rem;
-
+}
 
 /* High Chart */
 #high-chart {
