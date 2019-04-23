@@ -1,5 +1,6 @@
 require("leaflet");
 const PubSub = require("../../helpers/pub_sub.js");
+const Rectangle = require("../../helpers/beautiful_latlng_shapes");
 
 const MapView = function() {
   this.map = null;
@@ -58,24 +59,7 @@ MapView.prototype.handleMarkerDrag = function() {
 
 MapView.prototype.handleMarkerDragEnd = function() {
   this.zoom();
-  PubSub.publish("MapView:area-modified", {
-    latlng1: {
-      lat: this.selectionRect._latlngs[0][0].lat.toFixed(3),
-      lng: this.selectionRect._latlngs[0][0].lng.toFixed(3)
-    },
-    latlng2: {
-      lat: this.selectionRect._latlngs[0][1].lat.toFixed(3),
-      lng: this.selectionRect._latlngs[0][1].lng.toFixed(3)
-    },
-    latlng3: {
-      lat: this.selectionRect._latlngs[0][2].lat.toFixed(3),
-      lng: this.selectionRect._latlngs[0][2].lng.toFixed(3)
-    },
-    latlng4: {
-      lat: this.selectionRect._latlngs[0][3].lat.toFixed(3),
-      lng: this.selectionRect._latlngs[0][3].lng.toFixed(3)
-    }
-  });
+  PubSub.publish("MapView:area-modified", new Rectangle(this.selectionRect));
 };
 
 MapView.prototype.createBoundingBox = function() {

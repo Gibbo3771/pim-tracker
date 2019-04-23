@@ -1,4 +1,4 @@
-const MapView = require("./views/map_view.js");
+const MapView = require("./views/map_view/map_view.js");
 const CrimeListView = require("./views/crime_list_view.js");
 const PubSub = require("./helpers/pub_sub.js");
 const RequestHelper = require("./helpers/request_helper.js");
