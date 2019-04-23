@@ -1,6 +1,5 @@
 require("leaflet");
-const PubSub = require("../helpers/pub_sub.js");
-const BoundingBox = require("../models/bounding_box.js");
+const PubSub = require("../../helpers/pub_sub.js");
 
 const MapView = function() {
   this.map = null;
@@ -59,8 +58,24 @@ MapView.prototype.handleMarkerDrag = function() {
 
 MapView.prototype.handleMarkerDragEnd = function() {
   this.zoom();
-  const boundingBox = new BoundingBox(this.selectionRect);
-  PubSub.publish("MapView:area-modified", boundingBox);
+  PubSub.publish("MapView:area-modified", {
+    latlng1: {
+      lat: this.selectionRect._latlngs[0][0].lat.toFixed(3),
+      lng: this.selectionRect._latlngs[0][0].lng.toFixed(3)
+    },
+    latlng2: {
+      lat: this.selectionRect._latlngs[0][1].lat.toFixed(3),
+      lng: this.selectionRect._latlngs[0][1].lng.toFixed(3)
+    },
+    latlng3: {
+      lat: this.selectionRect._latlngs[0][2].lat.toFixed(3),
+      lng: this.selectionRect._latlngs[0][2].lng.toFixed(3)
+    },
+    latlng4: {
+      lat: this.selectionRect._latlngs[0][3].lat.toFixed(3),
+      lng: this.selectionRect._latlngs[0][3].lng.toFixed(3)
+    }
+  });
 };
 
 MapView.prototype.createBoundingBox = function() {
