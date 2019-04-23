@@ -18,9 +18,16 @@ AppContainer.prototype.getCrimeInRectangle = function(evt) {
     });
 };
 
+AppContainer.prototype.handleCrimeItemClicked = function(evt) {
+  const crimeItem = evt.detail;
+};
+
 AppContainer.prototype.bindEvents = function() {
   PubSub.subscribe("MapView:area-modified", evt =>
     this.getCrimeInRectangle(evt)
+  );
+  PubSub.subscribe("CrimeItemView:crime-item-clicked", evt =>
+    this.handleCrimeItemClicked(evt)
   );
 };
 
