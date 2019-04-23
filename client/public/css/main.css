@@ -111,3 +111,39 @@ header {
 .date {
   grid-area: date;
 }
+
+.crime-detail-view {
+  display: grid;
+  grid-template-areas:
+    ". category ."
+    "street street latlng "
+    "outcome outcome date";
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  width: 300px;
+  height: 300px;
+  padding: 5px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.7);
+}
+
+.crime-detail-view-category {
+  grid-area: category;
+}
+
+.crime-detail-view-street {
+  grid-area: street;
+}
+
+.crime-detail-view-latlng {
+  grid-area: latng;
+}
+
+.crime-detail-view-outcome {
+  grid-area: outcome;
+}
+
+.crime-detail-view-date {
+  grid-area: date;
+}

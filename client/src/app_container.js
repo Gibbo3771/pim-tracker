@@ -1,5 +1,6 @@
 const PubSub = require("./helpers/pub_sub");
 const RequestHelper = require("./helpers/request_helper");
+const CrimeDetailView = require("./views/crime_detail_view");
 
 const AppContainer = function() {};
 
@@ -20,6 +21,7 @@ AppContainer.prototype.getCrimeInRectangle = function(evt) {
 
 AppContainer.prototype.handleCrimeItemClicked = function(evt) {
   const crimeItem = evt.detail;
+  new CrimeDetailView(crimeItem).render();
 };
 
 AppContainer.prototype.bindEvents = function() {
