@@ -10,7 +10,7 @@ const Chart = function() {
     },
     title: { text: null },
     tooltip: {
-      pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
+      pointFormat: "{point.percentage:.2f}%</b>"
     },
     plotOptions: {
       pie: {

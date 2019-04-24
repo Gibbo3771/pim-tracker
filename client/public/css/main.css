@@ -275,6 +275,7 @@ header {
   height: 750px;
 }
 
+/*Legend Font Size*/
 tspan {
-  font-size: 24px;
+  font-size: 16px;
 }
