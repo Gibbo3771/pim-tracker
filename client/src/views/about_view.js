@@ -46,7 +46,9 @@ AboutView.prototype.createPersonView = function(person, name, link) {
   signImg.src = "css/images/collaborators/" + person + "/sign.png";
   personName.textContent = name;
   a.setAttribute("href", link);
-  div.appendChild(personImg);
+  imgDiv.classList.add("img-div");
+  imgDiv.appendChild(personImg);
+  div.appendChild(imgDiv);
   div.appendChild(personName);
   div.appendChild(signImg);
   a.appendChild(div);
