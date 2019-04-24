@@ -4,7 +4,7 @@ const PubSub = require("../../helpers/pub_sub.js");
 const LineGraph = function(parent, crime) {
   this.chart = Highcharts.chart(parent, {
     title: {
-      text: "Reports 6 months from recent data"
+      text: "Reports 12 months from recent data"
     },
     yAxis: {
       title: {
@@ -13,6 +13,11 @@ const LineGraph = function(parent, crime) {
     },
     xAxis: {
       categories: []
+    },
+    legend: {
+      layout: "vertical",
+      verticalAlign: "bottom",
+      labelFormat: "{name}"
     },
     plotOptions: {
       series: {

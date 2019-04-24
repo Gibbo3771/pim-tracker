@@ -12,14 +12,20 @@ const CrimeDetailView = function(crime) {
     name: this.crime.category,
     data: []
   };
+  this.callback = null;
 };
 
 CrimeDetailView.prototype.render = function() {
   this.chartContainer.id = "line-chart";
   this.container.appendChild(this.chartContainer);
   this.container.classList.add("crime-detail-view");
-  this.modal = new Modal("0.6", this.container, true, () =>
-    this.onCrimeDetailModalOpen()
+  this.modal = new Modal(
+    "0.6",
+    this.container,
+    true,
+    () => this.onCrimeDetailModalOpen(),
+    null,
+    () => this.handleModalClose()
   );
   this.modal.render().center();
   this.graph = new LineGraph("line-chart", this.crime);
@@ -40,11 +46,15 @@ CrimeDetailView.prototype.createTextElement = function(
 };
 
 CrimeDetailView.prototype.onCrimeDetailModalOpen = function() {
-  PubSub.publish("CrimeDetailView:modal-open", this.crime);
-  PubSub.subscribe("App:monthly-data-stream", evt => {
+  this.callback = PubSub.subscribe("App:monthly-data-stream", evt => {
     this.graphData.data.push(evt.detail);
     this.graph.setData(this.graphData);
   });
+  PubSub.publish("CrimeDetailView:modal-open", this.crime);
+};
+
+CrimeDetailView.prototype.handleModalClose = function() {
+  document.removeEventListener("App:monthly-data-stream", this.callback);
 };
 
 module.exports = CrimeDetailView;
