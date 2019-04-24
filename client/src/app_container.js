@@ -21,14 +21,16 @@ AppContainer.prototype.getCrimeInRectangle = function() {
         );
         this.getCrimeInRectangle();
       }
-      console.log(this.currentMonth);
+      res.sort(function(x, y) {
+        return x.id - y.id;
+      });
+      res.reverse();
       PubSub.publish("App:top-10-crime", res.splice(0, 10));
       PubSub.publish("App:number-of-crime", res.length);
       PubSub.publish("App:all-crime", res);
     })
     .catch(err => {
-      console.log(err);
-      PubSub.publish("App:data-overload");
+      PubSub.publish("App:data-overload"); // not used anywhere at the moment
     });
 };
 
@@ -48,14 +50,15 @@ AppContainer.prototype.handleOptionOnChange = function(evt) {
 };
 
 AppContainer.prototype.handleCrimeDetailModalOpen = function(evt) {
-  const crime = evt.detail;
+  const crimeA = evt.detail;
   const rq = new RequestHelper();
-  rq.getCrimeOverMonths(
-    this.selectedArea,
-    crime.category,
-    calculateDates(7)
-  ).then(res => {
-    PubSub.publish("App:monthly-data-stream", res);
+  rq.getCrimeOverMonths(this.selectedArea, calculateDates(13)).then(res => {
+    PubSub.publish(
+      "App:monthly-data-stream",
+      res.map(crimes => {
+        return crimes.filter(crimeB => crimeA.category === crimeB.category);
+      })
+    );
   });
 };
 
