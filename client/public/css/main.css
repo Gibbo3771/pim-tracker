@@ -72,6 +72,20 @@ header {
 
 /* ITEM LIST */
 
+/* map footer */
+.map-footer {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  padding: 8px;
+  background-color: #01009a;
+}
+
+#dropdown-date {
+  font-size: 1.1rem;
+  padding: 1px;
+}
+
 /* total number of crimes */
 #number {
   font-size: 1.5em;
