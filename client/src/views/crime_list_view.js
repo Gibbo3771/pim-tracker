@@ -45,9 +45,6 @@ CrimeListView.prototype.bindEvents = function() {
     this.getNumberOfCrimes(evt);
     this.latestCrimes(evt);
   });
-  PubSub.subscribe("App:data-overload", () => {
-    this.overload();
-  });
 };
 
 CrimeListView.prototype.getNumberOfCrimes = function(evt) {

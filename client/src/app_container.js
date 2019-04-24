@@ -6,18 +6,28 @@ const AboutView = require("./views/about_view.js");
 
 const AppContainer = function() {
   this.selectedArea = null;
+  this.currentMonth = new Date();
 };
 
-AppContainer.prototype.getCrimeInRectangle = function(evt) {
+AppContainer.prototype.getCrimeInRectangle = function() {
   const rq = new RequestHelper();
-
-  rq.getCrimeInRectangle(evt.detail)
+  rq.getCrimeInRectangle(this.selectedArea, this.currentMonth)
     .then(res => {
+      if (!res || res.length === 0) {
+        this.currentMonth = calculateDates(1, this.currentMonth)[0];
+        this.currentMonth = new Date(
+          `${this.currentMonth.getFullYear()}-${this.currentMonth.getMonth() +
+            1}`
+        );
+        this.getCrimeInRectangle();
+      }
+      console.log(this.currentMonth);
       PubSub.publish("App:top-10-crime", res.splice(0, 10));
       PubSub.publish("App:number-of-crime", res.length);
       PubSub.publish("App:all-crime", res);
     })
-    .catch(res => {
+    .catch(err => {
+      console.log(err);
       PubSub.publish("App:data-overload");
     });
 };
@@ -30,6 +40,11 @@ AppContainer.prototype.handleCrimeItemClicked = function(evt) {
 
 AppContainer.prototype.handleAboutButtonClick = function(evt) {
   new AboutView().render();
+};
+
+AppContainer.prototype.handleOptionOnChange = function(evt) {
+  this.currentMonth = new Date(evt.detail.value);
+  this.getCrimeInRectangle(new Date(evt.detail.value));
 };
 
 AppContainer.prototype.handleCrimeDetailModalOpen = function(evt) {
@@ -47,7 +62,7 @@ AppContainer.prototype.handleCrimeDetailModalOpen = function(evt) {
 AppContainer.prototype.bindEvents = function() {
   PubSub.subscribe("MapView:area-modified", evt => {
     this.selectedArea = evt.detail;
-    this.getCrimeInRectangle(evt);
+    this.getCrimeInRectangle();
   });
   PubSub.subscribe("CrimeItemView:crime-item-clicked", evt =>
     this.handleCrimeItemClicked(evt)
@@ -55,6 +70,9 @@ AppContainer.prototype.bindEvents = function() {
   PubSub.subscribe("ButtonAbout:click", evt =>
     this.handleAboutButtonClick(evt)
   );
+  PubSub.subscribe("Dropdown-date:change", evt => {
+    this.handleOptionOnChange(evt);
+  });
   PubSub.subscribe("CrimeDetailView:modal-open", evt => {
     this.handleCrimeDetailModalOpen(evt);
   });

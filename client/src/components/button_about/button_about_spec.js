@@ -9,12 +9,12 @@ describe("ButtonAbout", function() {
   });
   before(function() {
     this.element = document.body.appendChild(document.createElement("button"));
-    this.element.id = "about";
+    this.element.id = "button-about";
     this.button = new ButtonAbout();
   });
   it("should fire onClick when clicked", function() {
     const spy = sinon.spy(this.button, "onClick");
-    document.getElementById("about").click();
+    document.getElementById("button-about").click();
     expect(spy.callCount).to.equal(1);
   });
 });

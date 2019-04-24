@@ -8,7 +8,8 @@ const CrimeDetailView = require("./views/crime_detail_view");
 const AboutView = require("./views/about_view.js");
 const PieChart = require("./views/high_chart/pie_chart");
 const ButtonAbout = require("./components/button_about/button_about");
-const DropdownDate = require("./components/dropdown_date/dropdown_date");
+const DropdownDate = require("./components/dropdown_date/dropdown_date.js");
+const { sixMonths } = require("./helpers/dater/dater.js");
 require("leaflet");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,6 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const pieChart = new PieChart();
   pieChart.bindEvents();
 
-  const buttonAbout = new ButtonAbout();
+  new ButtonAbout();
   const dropdownDate = new DropdownDate();
+  let array = sixMonths().map(date => {
+    return `${date.getFullYear()}-${date.getMonth() + 1}`;
+  });
+  array = array.splice(1, array.length);
+  dropdownDate.update(array);
 });
