@@ -1,3 +1,7 @@
+* {
+  text-decoration: none;
+}
+
 html,
 body {
   margin: 0;
@@ -44,6 +48,11 @@ button.delete {
   z-index: 1000;
 }
 
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+  opacity: 0;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -55,19 +64,15 @@ button.delete {
 
 header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
   background-color: #01009a;
+  padding-top: 15px;
 }
 
 #img1 > img {
   width: 300px;
-  margin-left: 10px;
-  margin-top: 10px;
-}
-#img2 > img {
-  margin-left: 20px;
-  margin-top: 35px;
+  transform: rotate(3deg);
 }
 
 /* ITEM LIST */
@@ -190,6 +195,21 @@ header {
   align-items: center;
 }
 
+.about-view a div h2 {
+  color: #000;
+}
+
+.about-view a div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img-div {
+  border-radius: 100%;
+  overflow: hidden;
+}
+
 .about-view div img {
   width: 180px;
   height: auto;
@@ -197,6 +217,29 @@ header {
 
 .github-link {
   font-size: 2.5rem;
+  text-decoration: none;
+  color: #000;
+}
+
+#button-about {
+  border: 0.12em solid #c1c1c1;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 400;
+  color: #c1c1c1;
+  background-color: #01009a;
+  text-align: center;
+  font-size: 24px;
+  outline: none;
+  text-shadow: 1px 1px 2px #000;
+}
+#button-about:hover {
+  border-color: #a9a9a9;
+  color: #a9a9a9;
+}
+#button-about:active {
+  color: #8f8f8f;
+  border-color: #8f8f8f;
 }
 
 /* High Chart */

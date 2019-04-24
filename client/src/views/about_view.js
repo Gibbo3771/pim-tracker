@@ -16,7 +16,7 @@ AboutView.prototype.render = function() {
   container.appendChild(
     this.createPersonView(
       "pim",
-      "Kanokwan Sritawan a.k.a Pim",
+      "Pim Sritawan",
       "https://github.com/sierratango34"
     )
   );
@@ -35,22 +35,25 @@ AboutView.prototype.render = function() {
   console.log(this.modal);
 };
 
-AboutView.prototype.createPersonView = function(person, name, github) {
+AboutView.prototype.createPersonView = function(person, name, link) {
+  const a = document.createElement("a");
   const div = document.createElement("div");
-  const sign_img = document.createElement("img");
-  const person_img = document.createElement("img");
-  const person_name = document.createElement("h2");
-  const github_url = document.createElement("a");
-  person_img.src = "css/images/collaborators/" + person + "/avatar.jpg";
-  sign_img.src = "css/images/collaborators/" + person + "/sign.png";
-  person_name.textContent = name;
-  github_url.classList.add("fab", "fa-github", "github-link");
-  github_url.setAttribute("href", github);
-  div.appendChild(person_img);
-  div.appendChild(person_name);
-  div.appendChild(sign_img);
-  div.appendChild(github_url);
-  return div;
+  const imgDiv = document.createElement("div");
+  const signImg = document.createElement("img");
+  const personImg = document.createElement("img");
+  const personName = document.createElement("h2");
+  personImg.src = "css/images/collaborators/" + person + "/avatar.jpg";
+  signImg.src = "css/images/collaborators/" + person + "/sign.png";
+  personName.textContent = name;
+  a.setAttribute("href", link);
+  imgDiv.classList.add("img-div");
+  imgDiv.appendChild(personImg);
+  div.appendChild(imgDiv);
+  div.appendChild(personName);
+  div.appendChild(signImg);
+  a.appendChild(div);
+
+  return a;
 };
 
 module.exports = AboutView;
