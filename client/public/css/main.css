@@ -39,8 +39,9 @@ button.delete {
 }
 
 #map {
-  height: 500px;
-  width: 100%;
+  height: 50vh;
+  width: auto;
+  margin: 5rem;
 }
 
 #modal {
