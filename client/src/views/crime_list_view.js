@@ -7,6 +7,12 @@ const CrimeListView = function() {
 };
 
 CrimeListView.prototype.render = function() {
+  const headers = new CrimeItemView({
+    category: "Category",
+    streetName: "Approximate Location",
+    date: "Year/Month"
+  });
+  headers.render();
   this.crimes.forEach(crimeItemView => {
     crimeItemView.render();
   });
