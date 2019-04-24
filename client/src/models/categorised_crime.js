@@ -113,17 +113,6 @@ CategorisedCrime.prototype.bindEvents = function() {
   });
 };
 
-CategorisedCrime.prototype.get = function() {
-  const rq = new RequestHelper();
-  rq.getCrimeInRectangle()
-    .then(res => {
-      this.filterByCategory(res);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
 CategorisedCrime.prototype.filterByCategory = function(res) {
   for (let crimeData of res.detail) {
     switch (crimeData.category) {
