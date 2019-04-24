@@ -1,39 +1,28 @@
 const Modal = require("./modal/modal_view");
+const LineGraph = require("./high_chart/line_graph");
+const PubSub = require("./../helpers/pub_sub");
 
 const CrimeDetailView = function(crime) {
   this.crime = crime;
+  this.container = document.createElement("div");
+  this.chartContainer = document.createElement("div");
   this.modal = null;
+  this.graph = null;
+  this.graphData = {
+    name: this.crime.category,
+    data: []
+  };
 };
 
 CrimeDetailView.prototype.render = function() {
-  const container = document.createElement("div");
-  container.appendChild(
-    this.createTextElement("Crime Detail", "crime-detail-view-detail")
+  this.chartContainer.id = "line-chart";
+  this.container.appendChild(this.chartContainer);
+  this.container.classList.add("crime-detail-view");
+  this.modal = new Modal("0.6", this.container, true, () =>
+    this.onCrimeDetailModalOpen()
   );
-  //   container.appendChild(
-  //     this.createTextElement(this.crime.category, "crime-detail-view-category")
-  //   );
-  //   container.appendChild(
-  //     this.createTextElement(this.crime.streetName, "crime-detail-view-street")
-  //   );
-  //   container.appendChild(
-  //     this.createTextElement(
-  //       `${this.crime.lat},${this.crime.lng}`,
-  //       "crime-detail-view-latlng"
-  //     )
-  //   );
-  //   container.appendChild(
-  //     this.createTextElement(
-  //       this.crime.outcome.category,
-  //       "crime-detail-view-outcome"
-  //     )
-  //   );
-  //   container.appendChild(
-  //     this.createTextElement(this.crime.outcome.date, "crime-detail-view-date")
-  //   );
-  container.classList.add("crime-detail-view");
-  this.modal = new Modal("0.6", container);
   this.modal.render().center();
+  this.graph = new LineGraph("line-chart", this.crime);
 };
 
 CrimeDetailView.prototype.createTextElement = function(
@@ -48,6 +37,14 @@ CrimeDetailView.prototype.createTextElement = function(
   div.classList.add(klass);
   e.textContent = `${prefix} ${text} ${suffix}`;
   return div;
+};
+
+CrimeDetailView.prototype.onCrimeDetailModalOpen = function() {
+  PubSub.publish("CrimeDetailView:modal-open", this.crime);
+  PubSub.subscribe("App:monthly-data-stream", evt => {
+    this.graphData.data.push(evt.detail);
+    this.graph.setData(this.graphData);
+  });
 };
 
 module.exports = CrimeDetailView;

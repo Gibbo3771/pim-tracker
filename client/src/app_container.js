@@ -1,6 +1,7 @@
 const PubSub = require("./helpers/pub_sub");
 const RequestHelper = require("./helpers/request_helper");
 const CrimeDetailView = require("./views/crime_detail_view");
+const { calculateDates } = require("./helpers/dater/dater");
 const AboutView = require("./views/about_view.js");
 
 const AppContainer = function() {
@@ -23,7 +24,8 @@ AppContainer.prototype.getCrimeInRectangle = function(date = new Date()) {
 
 AppContainer.prototype.handleCrimeItemClicked = function(evt) {
   const crimeItem = evt.detail;
-  new CrimeDetailView(crimeItem).render();
+  const crimeDetail = new CrimeDetailView(crimeItem);
+  crimeDetail.render();
 };
 
 AppContainer.prototype.handleAboutButtonClick = function(evt) {
@@ -32,6 +34,18 @@ AppContainer.prototype.handleAboutButtonClick = function(evt) {
 
 AppContainer.prototype.handleOptionOnChange = function(evt) {
   this.getCrimeInRectangle(new Date(evt.detail.value));
+};
+
+AppContainer.prototype.handleCrimeDetailModalOpen = function(evt) {
+  const crime = evt.detail;
+  const rq = new RequestHelper();
+  rq.getCrimeOverMonths(
+    this.selectedArea,
+    crime.category,
+    calculateDates(7)
+  ).then(res => {
+    PubSub.publish("App:monthly-data-stream", res);
+  });
 };
 
 AppContainer.prototype.bindEvents = function() {
@@ -47,6 +61,9 @@ AppContainer.prototype.bindEvents = function() {
   );
   PubSub.subscribe("Dropdown-date:change", evt => {
     this.handleOptionOnChange(evt);
+  });
+  PubSub.subscribe("CrimeDetailView:modal-open", evt => {
+    this.handleCrimeDetailModalOpen(evt);
   });
 };
 
