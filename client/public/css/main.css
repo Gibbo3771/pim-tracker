@@ -89,6 +89,7 @@ header {
 #dropdown-date {
   font-size: 1.1rem;
   padding: 1px;
+  outline: none;
 }
 
 /* total number of crimes */
@@ -130,6 +131,7 @@ header {
 
 #information > div:first-child {
   background: #828282;
+  cursor: default;
 }
 
 #information > div {
@@ -210,6 +212,8 @@ header {
   width: 900px;
   height: 500px;
   background: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.7);
 }
 .about-view > div {
   display: flex;
