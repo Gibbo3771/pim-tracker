@@ -89,6 +89,7 @@ header {
 #dropdown-date {
   font-size: 1.1rem;
   padding: 1px;
+  outline: none;
 }
 
 /* total number of crimes */
@@ -101,22 +102,45 @@ header {
 }
 /* latest 10 crimes */
 #latest-10 {
-  font-size: 1.2em;
+  font-size: 1.5em;
   margin-top: 30px;
   margin-left: 5px;
+  text-align: center;
 }
 /* list table */
 #information {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  margin-left: 5px;
+  margin-top: 20px;
 }
+#information > div:nth-child(odd) {
+  background: #c1c1c1;
+  transition: 0.3s;
+}
+
+#information > div:nth-child(even) {
+  background: #f1f1f1;
+  transition: 0.3s;
+}
+
+#information > div:hover {
+  background: #97a4da;
+  transition: 0.3s;
+}
+
+#information > div:first-child {
+  background: #828282;
+  cursor: default;
+}
+
 #information > div {
   display: grid;
   grid-template-areas: "categoryType streetName date";
-  grid-template-columns: repeat(3, 300px);
+  grid-template-columns: 300px 400px 150px;
   grid-template-rows: auto;
+  justify-content: center;
+  cursor: pointer;
 }
 .itemContainer > div {
   font-size: 1.2em;
@@ -188,6 +212,8 @@ header {
   width: 900px;
   height: 500px;
   background: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.7);
 }
 .about-view > div {
   display: flex;
@@ -232,6 +258,7 @@ header {
   font-size: 24px;
   outline: none;
   text-shadow: 1px 1px 2px #000;
+  border-radius: 7px;
 }
 #button-about:hover {
   border-color: #a9a9a9;
