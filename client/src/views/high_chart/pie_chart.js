@@ -1,7 +1,7 @@
 const Highcharts = require("highcharts");
-const PubSub = require("../helpers/pub_sub.js");
+const PubSub = require("../../helpers/pub_sub.js");
 
-const Chart = function() {
+const PieChart = function() {
   this.chart = Highcharts.chart("high-chart", {
     chart: {
       plotBackgroundColor: null,
@@ -38,14 +38,14 @@ const Chart = function() {
   });
 };
 
-Chart.prototype.bindEvents = function() {
+PieChart.prototype.bindEvents = function() {
   PubSub.subscribe("CategorisedCrime:refined-crime-data", evt => {
     this.setData(evt.detail);
   });
 };
 
-Chart.prototype.setData = function(data) {
+PieChart.prototype.setData = function(data) {
   this.chart.series[0].setData(data, true, true);
 };
 
-module.exports = Chart;
+module.exports = PieChart;
