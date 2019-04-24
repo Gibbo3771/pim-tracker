@@ -8,6 +8,8 @@ const AppContainer = function() {};
 AppContainer.prototype.getCrimeInRectangle = function(evt) {
   const rq = new RequestHelper();
 
+  rq.getAnnualCrimeInRectangle(evt.detail);
+
   rq.getCrimeInRectangle(evt.detail)
     .then(res => {
       PubSub.publish("App:top-10-crime", res.splice(0, 10));

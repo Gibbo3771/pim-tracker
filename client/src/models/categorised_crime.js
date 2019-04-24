@@ -78,6 +78,22 @@ const CategorisedCrime = function() {
   };
 };
 
+CategorisedCrime.prototype.getMonthlyCrimeData = function() {
+  const rq = new RequestHelper();
+  rq.getAnnualCrimeInRectangle()
+    .then(res => {
+      this.filterForMonthlyDataOfCrimeCategory(res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+// CategorisedCrime.prototype.filterForMonthlyDataOfCrimeCategory = function () {
+//   for (let crimeData of res.detail) {
+//     switch (crimeData.category) {}
+// };
+
 CategorisedCrime.prototype.chartifyData = function() {
   const data = [];
   for (let key in this.allCrimes) {
