@@ -1,3 +1,7 @@
+* {
+  text-decoration: none;
+}
+
 html,
 body {
   margin: 0;
@@ -44,6 +48,11 @@ button.delete {
   z-index: 1000;
 }
 
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+  opacity: 0;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -55,19 +64,15 @@ button.delete {
 
 header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
   background-color: #01009a;
+  padding-top: 15px;
 }
 
 #img1 > img {
   width: 300px;
-  margin-left: 10px;
-  margin-top: 10px;
-}
-#img2 > img {
-  margin-left: 20px;
-  margin-top: 35px;
+  transform: rotate(3deg);
 }
 
 /* ITEM LIST */
@@ -84,6 +89,7 @@ header {
 #dropdown-date {
   font-size: 1.1rem;
   padding: 1px;
+  outline: none;
 }
 
 /* total number of crimes */
@@ -96,22 +102,45 @@ header {
 }
 /* latest 10 crimes */
 #latest-10 {
-  font-size: 1.2em;
+  font-size: 1.5em;
   margin-top: 30px;
   margin-left: 5px;
+  text-align: center;
 }
 /* list table */
 #information {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  margin-left: 5px;
+  margin-top: 20px;
 }
+#information > div:nth-child(odd) {
+  background: #c1c1c1;
+  transition: 0.3s;
+}
+
+#information > div:nth-child(even) {
+  background: #f1f1f1;
+  transition: 0.3s;
+}
+
+#information > div:hover {
+  background: #97a4da;
+  transition: 0.3s;
+}
+
+#information > div:first-child {
+  background: #828282;
+  cursor: default;
+}
+
 #information > div {
   display: grid;
   grid-template-areas: "categoryType streetName date";
-  grid-template-columns: repeat(3, 300px);
+  grid-template-columns: 300px 400px 150px;
   grid-template-rows: auto;
+  justify-content: center;
+  cursor: pointer;
 }
 .itemContainer > div {
   font-size: 1.2em;
@@ -152,11 +181,28 @@ header {
   width: 900px;
   height: 500px;
   background: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.7);
 }
 .about-view > div {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.about-view a div h2 {
+  color: #000;
+}
+
+.about-view a div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img-div {
+  border-radius: 100%;
+  overflow: hidden;
 }
 
 .about-view div img {
@@ -166,6 +212,30 @@ header {
 
 .github-link {
   font-size: 2.5rem;
+  text-decoration: none;
+  color: #000;
+}
+
+#button-about {
+  border: 0.12em solid #c1c1c1;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 400;
+  color: #c1c1c1;
+  background-color: #01009a;
+  text-align: center;
+  font-size: 24px;
+  outline: none;
+  text-shadow: 1px 1px 2px #000;
+  border-radius: 7px;
+}
+#button-about:hover {
+  border-color: #a9a9a9;
+  color: #a9a9a9;
+}
+#button-about:active {
+  color: #8f8f8f;
+  border-color: #8f8f8f;
 }
 
 /* High Chart */
@@ -174,6 +244,7 @@ header {
   height: 750px;
 }
 
+/*Legend Font Size*/
 tspan {
-  font-size: 24px;
+  font-size: 16px;
 }
