@@ -186,6 +186,11 @@ header {
   align-items: center;
 }
 
+.img-div {
+  border-radius: 100%;
+  overflow: hidden;
+}
+
 .about-view div img {
   width: 180px;
   height: auto;
