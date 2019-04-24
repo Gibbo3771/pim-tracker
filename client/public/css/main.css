@@ -48,6 +48,11 @@ button.delete {
   z-index: 1000;
 }
 
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+  opacity: 0;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
