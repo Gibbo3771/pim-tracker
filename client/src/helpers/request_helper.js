@@ -31,11 +31,7 @@ RequestHelper.prototype.getCrimeInRectangle = function(
   return this.request(params);
 };
 
-RequestHelper.prototype.getCrimeOverMonths = function(
-  rectangle,
-  category,
-  listOfDates
-) {
+RequestHelper.prototype.getCrimeOverMonths = function(rectangle, listOfDates) {
   const urls = [];
   const { latlng1, latlng2, latlng3, latlng4 } = rectangle;
   this.url = "https://data.police.uk/api/crimes-street/all-crime";
@@ -44,7 +40,6 @@ RequestHelper.prototype.getCrimeOverMonths = function(
       poly: `${latlng1.lat},${latlng1.lng}:${latlng2.lat},${latlng2.lng}:${
         latlng3.lat
       },${latlng3.lng}:${latlng4.lat},${latlng4.lng}`,
-      category: category,
       date: `${date.getFullYear()}-${date.getMonth() + 1}`
     };
     urls.push(this.createUrl(params));
