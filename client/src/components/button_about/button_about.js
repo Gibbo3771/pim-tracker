@@ -2,7 +2,7 @@ const PubSub = require("../../helpers/pub_sub");
 
 const ButtonAbout = function() {
   document
-    .getElementById("about")
+    .getElementById("button-about")
     .addEventListener("click", evt => this.onClick(evt));
 };
 

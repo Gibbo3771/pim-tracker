@@ -7,6 +7,12 @@ const CrimeListView = function() {
 };
 
 CrimeListView.prototype.render = function() {
+  const headers = new CrimeItemView({
+    category: "Category",
+    streetName: "Approximate Location",
+    date: "Year/Month"
+  });
+  headers.render();
   this.crimes.forEach(crimeItemView => {
     crimeItemView.render();
   });
@@ -42,12 +48,6 @@ CrimeListView.prototype.bindEvents = function() {
   PubSub.subscribe("App:data-overload", () => {
     this.overload();
   });
-};
-
-CrimeListView.prototype.overload = function() {
-  const number = document.querySelector("#number");
-  this.clear();
-  number.textContent = "Please Select A Smaller Area";
 };
 
 CrimeListView.prototype.getNumberOfCrimes = function(evt) {

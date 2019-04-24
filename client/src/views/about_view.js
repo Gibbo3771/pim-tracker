@@ -32,7 +32,6 @@ AboutView.prototype.render = function() {
   this.modal = new Modal("0.6", container);
   container.classList.add("about-view");
   this.modal.render().center();
-  console.log(this.modal);
 };
 
 AboutView.prototype.createPersonView = function(person, name, link) {
