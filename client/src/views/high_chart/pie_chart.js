@@ -10,19 +10,18 @@ const PieChart = function() {
     },
     title: { text: null },
     tooltip: {
-      pointFormat: "{point.percentage:.2f}%</b>"
+      enabled: false
     },
     plotOptions: {
       pie: {
-        allowPointSelect: true,
-        cursor: "pointer",
         dataLabels: {
           enabled: true,
           format: "<b>{point.name}</b>: {point.percentage:.2f} %",
           style: {
             color:
               (Highcharts.theme && Highcharts.theme.contrastTextColor) ||
-              "black"
+              "black",
+            fontSize: "18px"
           }
         }
       }

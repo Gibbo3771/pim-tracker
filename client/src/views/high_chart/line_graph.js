@@ -14,6 +14,11 @@ const LineGraph = function(parent, crime) {
     xAxis: {
       categories: []
     },
+    legend: {
+      layout: "vertical",
+      verticalAlign: "bottom",
+      labelFormat: "{name}"
+    },
     plotOptions: {
       series: {
         allowPointSelect: true
