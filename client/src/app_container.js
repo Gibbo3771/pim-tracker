@@ -35,6 +35,9 @@ AppContainer.prototype.bindEvents = function() {
   PubSub.subscribe("CrimeItemView:crime-item-clicked", evt =>
     this.handleCrimeItemClicked(evt)
   );
+  PubSub.subscribe("ButtonAbout:click", evt =>
+    this.handleAboutButtonClick(evt)
+  );
 };
 
 module.exports = AppContainer;
