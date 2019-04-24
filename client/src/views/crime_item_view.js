@@ -1,4 +1,4 @@
-const PubSub = require("../helpers/pub_sub.js");
+const PubSub = require("../helpers/pub_sub");
 
 const CrimeItemView = function(item) {
   this.item = item;
@@ -7,6 +7,7 @@ const CrimeItemView = function(item) {
 CrimeItemView.prototype.render = function() {
   const itemContainer = document.createElement("div");
   itemContainer.classList.add("itemContainer");
+  itemContainer.addEventListener("click", evt => this.onClick(evt));
 
   const categoryType = this.createCategory();
   itemContainer.appendChild(categoryType);
@@ -44,6 +45,10 @@ CrimeItemView.prototype.createDate = function() {
   date.classList.add("date");
   date.appendChild(p);
   return date;
+};
+
+CrimeItemView.prototype.onClick = function(evt) {
+  PubSub.publish("CrimeItemView:crime-item-clicked", this.item);
 };
 
 module.exports = CrimeItemView;

@@ -3,8 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>The Bill</title>
+    <title>The PIM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
@@ -14,10 +20,18 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <script src="js/bundle.js"></script>
   </head>
-  <header><h1>The Bill</h1></header>
+  <header>
+    <div id="img1"><img src="./css/images/pim_logo.png" alt="" /></div>
+    <div id="img2"><img src="./css/images/pim_logo_2.png" alt="" /></div>
+    <div><button id="button-about">About</button></div>
+  </header>
   <body>
     <div id="map"></div>
-    <div id="number"></div>
+    <div class="map-footer">
+      <div id="number"></div>
+      <div id="select-date"><select name="" id="dropdown-date"></select></div>
+    </div>
+    <div id="high-chart"></div>
     <div id="latest-10"></div>
     <div id="information"></div>
   </body>

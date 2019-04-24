@@ -7,15 +7,12 @@ describe("Modal View", function() {
   jsdom({
     url: "http://localhost"
   });
-
   const onOpen = sinon.spy();
   const onBackdropClick = sinon.spy();
   const onClose = sinon.spy();
 
   before(function() {
     this.modal = new Modal(
-      "150px",
-      "150px",
       "0.9",
       document.createElement("div"),
       onOpen,

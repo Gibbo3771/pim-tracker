@@ -1,40 +1,36 @@
-const MapView = require("./views/map_view.js");
+const AppContainer = require("./app_container");
+const MapView = require("./views/map_view/map_view.js");
 const CrimeListView = require("./views/crime_list_view.js");
+const CategorisedCrime = require("./models/categorised_crime.js");
 const PubSub = require("./helpers/pub_sub.js");
 const RequestHelper = require("./helpers/request_helper.js");
+const CrimeDetailView = require("./views/crime_detail_view");
+const AboutView = require("./views/about_view.js");
+const PieChart = require("./views/high_chart/pie_chart");
+const ButtonAbout = require("./components/button_about/button_about");
+const DropdownDate = require("./components/dropdown_date/dropdown_date.js");
+const { sixMonths } = require("./helpers/dater/dater.js");
 require("leaflet");
 
-const getData = evt => {
-  const rq = new RequestHelper(
-    "https://data.police.uk/api/crimes-street/all-crime"
-  );
-
-  const { latlng1, latlng2, latlng3, latlng4 } = evt.detail;
-  rq.getCrimeInRectangle(
-    latlng1.lat,
-    latlng1.lng,
-    latlng2.lat,
-    latlng2.lng,
-    latlng3.lat,
-    latlng3.lng,
-    latlng4.lat,
-    latlng4.lng
-  )
-    .then(res => {
-      PubSub.publish("App:top-10-crime", res.splice(0, 10));
-      PubSub.publish("App:number-of-crime", res.length);
-    })
-    .catch(res => {
-      PubSub.publish("App:data-overload");
-    });
-};
-
 document.addEventListener("DOMContentLoaded", () => {
+  const appContainer = new AppContainer();
+  const cc = new CategorisedCrime();
+  cc.bindEvents();
+  appContainer.bindEvents();
   const map = new MapView();
   map.render();
   map.bindEvents();
-
   const listView = new CrimeListView();
   listView.bindEvents();
-  PubSub.subscribe("MapView:area-modified", getData);
+  const aboutView = new AboutView();
+  const pieChart = new PieChart();
+  pieChart.bindEvents();
+
+  new ButtonAbout();
+  const dropdownDate = new DropdownDate();
+  let array = sixMonths().map(date => {
+    return `${date.getFullYear()}-${date.getMonth() + 1}`;
+  });
+  array = array.splice(1, array.length);
+  dropdownDate.update(array);
 });

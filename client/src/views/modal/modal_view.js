@@ -1,8 +1,6 @@
-// Create a new modal with the given max width, height and current opacity.
+// Create a new modal with the given opacity.
 // The content type must be a div node
 const Modal = function(
-  width,
-  height,
   opacity,
   content = null,
   defaultBackdropOnClick = true,
@@ -12,8 +10,6 @@ const Modal = function(
 ) {
   this.backdrop = null;
   this.container = null;
-  this.width = width;
-  this.height = height;
   this.opacity = opacity;
   this.content = content;
   this.defaultBackdropOnClick = defaultBackdropOnClick;
@@ -51,8 +47,8 @@ Modal.prototype.create = function() {
   this.container.id = "modal";
   this.container.style.position = "absolute";
   this.container.style.zIndex = "1000";
-  this.container.style.width = this.width;
-  this.container.style.height = this.height;
+  this.container.style.width = "auto";
+  this.container.style.height = "auto";
   this.container.appendChild(this.content);
   return this.container;
 };
