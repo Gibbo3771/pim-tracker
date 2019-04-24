@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   listView.bindEvents();
 
   const aboutView = new AboutView();
-  document.getElementById("about").addEventListener("click", evt => {
+  document.getElementById("button-about").addEventListener("click", evt => {
     appContainer.handleAboutButtonClick(evt);
   });
   const chart = new Chart();
