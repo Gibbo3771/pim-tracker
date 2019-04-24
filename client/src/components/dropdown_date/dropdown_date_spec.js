@@ -32,7 +32,7 @@ describe("DropdownDate", function() {
       this.dropdown.update(datesNew);
       expect(spy.callCount).to.equal(1);
       expect(this.element.childNodes.length).to.equal(3);
-      expect(this.element.childNodes[0].nodeName).to.equal("SELECT");
+      expect(this.element.childNodes[0].nodeName).to.equal("OPTION");
     });
   });
   describe("Event handling", function() {
