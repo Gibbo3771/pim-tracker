@@ -8,11 +8,7 @@ const CrimeDetailView = require("./views/crime_detail_view");
 const AboutView = require("./views/about_view.js");
 const PieChart = require("./views/high_chart/pie_chart");
 const ButtonAbout = require("./components/button_about/button_about");
-<<<<<<< HEAD
 const DropdownDate = require("./components/dropdown_date/dropdown_date");
-=======
-const DropdownDate = require("./components/dropdown_date/dropdown_date.js");
->>>>>>> develop
 require("leaflet");
 
 document.addEventListener("DOMContentLoaded", () => {
