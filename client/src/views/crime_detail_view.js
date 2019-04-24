@@ -12,7 +12,6 @@ const CrimeDetailView = function(crime) {
     name: this.crime.category,
     data: []
   };
-  console.log("crime detail view", crime);
 };
 
 CrimeDetailView.prototype.render = function() {

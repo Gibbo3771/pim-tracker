@@ -1,7 +1,7 @@
 const PubSub = require("./helpers/pub_sub");
 const RequestHelper = require("./helpers/request_helper");
 const CrimeDetailView = require("./views/crime_detail_view");
-const { sixMonths } = require("./helpers/dater/dater");
+const { calculateDates } = require("./helpers/dater/dater");
 const AboutView = require("./views/about_view.js");
 
 const AppContainer = function() {
@@ -35,11 +35,13 @@ AppContainer.prototype.handleAboutButtonClick = function(evt) {
 AppContainer.prototype.handleCrimeDetailModalOpen = function(evt) {
   const crime = evt.detail;
   const rq = new RequestHelper();
-  rq.getCrimeOverMonths(this.selectedArea, crime.category, sixMonths()).then(
-    res => {
-      PubSub.publish("App:monthly-data-stream", res);
-    }
-  );
+  rq.getCrimeOverMonths(
+    this.selectedArea,
+    crime.category,
+    calculateDates(7)
+  ).then(res => {
+    PubSub.publish("App:monthly-data-stream", res);
+  });
 };
 
 AppContainer.prototype.bindEvents = function() {

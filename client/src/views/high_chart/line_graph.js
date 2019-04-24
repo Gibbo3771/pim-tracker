@@ -2,9 +2,10 @@ const Highcharts = require("highcharts");
 const PubSub = require("../../helpers/pub_sub.js");
 
 const LineGraph = function(parent, crime) {
-  console.log("line graph", crime);
   this.chart = Highcharts.chart(parent, {
-    title: "Reports last 6 months",
+    title: {
+      text: "Reports 6 months from recent data"
+    },
     yAxis: {
       title: {
         text: "Reports"
