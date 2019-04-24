@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pieChart = new PieChart();
   pieChart.bindEvents();
 
-  const buttonAbout = new ButtonAbout();
+  new ButtonAbout();
   const dropdownDate = new DropdownDate();
   let array = sixMonths().map(date => {
     return `${date.getFullYear()}-${date.getMonth() + 1}`;

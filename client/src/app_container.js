@@ -6,18 +6,28 @@ const AboutView = require("./views/about_view.js");
 
 const AppContainer = function() {
   this.selectedArea = null;
+  this.currentMonth = new Date();
 };
 
-AppContainer.prototype.getCrimeInRectangle = function(date = new Date()) {
+AppContainer.prototype.getCrimeInRectangle = function() {
   const rq = new RequestHelper();
-  console.log("im asd treoihrakjsdb", this.selectedArea);
-  rq.getCrimeInRectangle(this.selectedArea, date)
+  rq.getCrimeInRectangle(this.selectedArea, this.currentMonth)
     .then(res => {
+      if (!res || res.length === 0) {
+        this.currentMonth = calculateDates(1, this.currentMonth)[0];
+        this.currentMonth = new Date(
+          `${this.currentMonth.getFullYear()}-${this.currentMonth.getMonth() +
+            1}`
+        );
+        this.getCrimeInRectangle();
+      }
+      console.log(this.currentMonth);
       PubSub.publish("App:top-10-crime", res.splice(0, 10));
       PubSub.publish("App:number-of-crime", res.length);
       PubSub.publish("App:all-crime", res);
     })
-    .catch(res => {
+    .catch(err => {
+      console.log(err);
       PubSub.publish("App:data-overload");
     });
 };
@@ -33,6 +43,7 @@ AppContainer.prototype.handleAboutButtonClick = function(evt) {
 };
 
 AppContainer.prototype.handleOptionOnChange = function(evt) {
+  this.currentMonth = new Date(evt.detail.value);
   this.getCrimeInRectangle(new Date(evt.detail.value));
 };
 

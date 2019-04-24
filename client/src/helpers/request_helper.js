@@ -15,10 +15,9 @@ RequestHelper.prototype.getCrimeAtLocation = function(date, lat, long) {
 
 RequestHelper.prototype.getCrimeInRectangle = function(
   rectangle,
-  date = new Date("2019-03"),
+  date = new Date(),
   category = "all-crime"
 ) {
-  console.log("hashdlasd", date);
   const { latlng1, latlng2, latlng3, latlng4 } = rectangle;
   this.url = "https://data.police.uk/api/crimes-street/all-crime";
   const params = {
