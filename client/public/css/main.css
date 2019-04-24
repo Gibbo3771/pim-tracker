@@ -194,3 +194,11 @@ header {
 tspan {
   font-size: 24px;
 }
+
+/* INFO WRAPPER  */
+
+#info-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
