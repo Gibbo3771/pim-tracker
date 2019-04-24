@@ -128,51 +128,20 @@ header {
 
 .crime-detail-view {
   display: grid;
-  grid-template-areas:
-    "detail detail detail"
-    "category category category"
-    "street street street "
-    "outcome date latlng";
-  grid-template-columns: 200px 200px 200px;
-  grid-template-rows: 110px 110px 110px 110px;
-  width: 600px;
-  height: 440px;
+  grid-template-areas: "detail";
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  width: 700px;
+  height: 540px;
   padding: 5px;
   background: white;
   border-radius: 5px;
   box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.7);
 }
 
-.crime-detail-view-detail {
-  grid-area: detail;
-  font-size: 36px;
+.crime-detail-view-chart {
+  grid-area: chart;
   justify-self: center;
-}
-
-.crime-detail-view-category {
-  grid-area: category;
-  font-size: 22px;
-
-  justify-self: center;
-}
-
-.crime-detail-view-street {
-  grid-area: street;
-  justify-self: center;
-}
-
-.crime-detail-view-latlng {
-  grid-area: latlng;
-  align-self: end;
-}
-
-.crime-detail-view-outcome {
-  grid-area: outcome;
-  justify-self: center;
-}
-
-.crime-detail-view-date {
-  grid-area: date;
 }
 
 /* About Page */
